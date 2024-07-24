@@ -1,9 +1,10 @@
-import { TTask } from '../../global/types';
 import { useTimer } from 'react-timer-hook';
 import ClockController from './ClockController';
-import { useAppState } from '../../context/GeneralSettings';
 import { useState } from 'react';
 import AnalogClock from './AnalogClock';
+import Mode from '../Mode/Mode';
+import { TTask } from '../../global/types';
+import { useAppState } from '../../context/GeneralSettings';
 
 interface IClockProps {
   mode: 'Digital' | 'Analog';
@@ -12,9 +13,10 @@ interface IClockProps {
 }
 
 const Clock = ({ mode, perTimeLeft, currentTask }: IClockProps) => {
-  const time = new Date();
   const { currentSetting } = useAppState();
-  time.setSeconds(time.getSeconds() + currentSetting.pomo_time);
+  console.log('Clock re-render', currentSetting.timer_length);
+  const time = new Date();
+  time.setSeconds(time.getSeconds() + currentSetting.timer_length);
   const autoStart = false;
   const [didStart, setDidStart] = useState(false);
   const { seconds, minutes, isRunning, start, pause, resume, restart } =
@@ -27,8 +29,17 @@ const Clock = ({ mode, perTimeLeft, currentTask }: IClockProps) => {
       },
     });
 
+  const onChangeMode = (timerLength: number) => {
+    console.log('Change mode', timerLength);
+    const newTime = new Date();
+    newTime.setSeconds(newTime.getSeconds() + timerLength);
+    restart(newTime, false);
+    setDidStart(false);
+  };
+
   return (
     <>
+      <Mode onChangeMode={onChangeMode} />
       {mode === 'Digital' ? (
         <>
           <h1 style={{ margin: 20 }}>
@@ -41,7 +52,11 @@ const Clock = ({ mode, perTimeLeft, currentTask }: IClockProps) => {
           </h1>
         </>
       ) : (
-        <AnalogClock minutes={minutes} seconds={seconds} perTimeLeft={perTimeLeft} />
+        <AnalogClock
+          minutes={minutes}
+          seconds={seconds}
+          perTimeLeft={perTimeLeft}
+        />
       )}
       <ClockController
         didStart={didStart}
@@ -53,7 +68,9 @@ const Clock = ({ mode, perTimeLeft, currentTask }: IClockProps) => {
         }}
         onReset={() => {
           const newTime = new Date();
-          newTime.setSeconds(newTime.getSeconds() + currentSetting.pomo_time);
+          newTime.setSeconds(
+            newTime.getSeconds() + currentSetting.timer_length
+          );
           restart(newTime, false);
         }}
         onResume={resume}

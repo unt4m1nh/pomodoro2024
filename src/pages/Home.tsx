@@ -16,12 +16,11 @@ import Clock from '../components/Clock/Clock';
 import { ClockTypes } from '../global/const';
 import Header from '../components/Header/Header';
 
-const Home : typeof React.FC = () => {
+const Home: typeof React.FC = () => {
   //const [time, setTime] = useState(1200);
   const { currentSetting } = useAppState();
-  const [mode, setMode] = useState('Pomodoro');
 
-  const [tasks, setTasks]  = useState(null); 
+  const [tasks, setTasks] = useState(null);
   const [taskValue, setTaskValue] = useState('');
   const [showTask, setShowTask] = useState(false);
 
@@ -33,7 +32,6 @@ const Home : typeof React.FC = () => {
   const btnPlayAudioRef = useRef(null);
   const time = new Date();
   time.setSeconds(time.getSeconds() + 600);
-
 
   console.log('Component Mounted');
   useEffect(() => {
@@ -52,32 +50,9 @@ const Home : typeof React.FC = () => {
     };
   }, []);
 
-//   useEffect(() => {
-//     if (settingBtnRef.current) {
-//       const settingBtnRect = settingBtnRef.current.getBoundingClientRect();
-//       console.log('Element position', {
-//         top: settingBtnRect.top,
-//         left: settingBtnRect.left,
-//       });
-//       const posX = settingBtnRect.top + settingBtnRect.height;
-//       const posY = settingBtnRect.left - settingBtnRect.width * 3.5;
-//       setSettingPos({ posX: posX, posY: posY });
-//     }
-//   }, [isFullScreen]);
-
-
-  const handleChangeMode = (modeSelected: any) => {
-    if (modeSelected === 'Pomodoro') {
-      setMode('Pomodoro');
-      document.title = modeSelected;
-    } else if (modeSelected === 'Short Break') {
-      setMode('Short Break');
-      document.title = modeSelected;
-    } else {
-      setMode('Long Break');
-      document.title = modeSelected;
-    }
-  };
+  useEffect(() => {
+    console.log(currentSetting.timer_length);
+  }, [currentSetting.timer_length]);
 
   const toggleFullScreen = () => {
     if (!isFullScreen) {
@@ -172,37 +147,12 @@ const Home : typeof React.FC = () => {
         <Header />
       </div>
       <div className='content'>
-        <div className='content-mode-selection'>
-          <div
-            className={mode === 'Pomodoro' ? 'modeActive' : 'mode'}
-            onClick={() => {
-              handleChangeMode('Pomodoro');
-            }}
-          >
-            Pomodoro
-          </div>
-          <div
-            className={mode === 'Short Break' ? 'modeActive' : 'mode'}
-            onClick={() => {
-              handleChangeMode('Short Break');
-            }}
-          >
-            Short Break
-          </div>
-          <div
-            className={mode === 'Long Break' ? 'modeActive' : 'mode'}
-            onClick={() => {
-              handleChangeMode('Long Break');
-            }}
-          >
-            Long Break
-          </div>
-        </div>
-        <Clock mode={ClockTypes.DIGITAL} perTimeLeft={100} currentTask={null}/>
-        <audio
-          ref={btnPlayAudioRef}
-          src={''}
-        ></audio>
+        <Clock
+          mode={ClockTypes.DIGITAL}
+          perTimeLeft={100}
+          currentTask={null}
+        />
+        <audio ref={btnPlayAudioRef} src={''}></audio>
         <div className={showTask ? 'task-container-active' : 'task-container'}>
           <div className='task-content'>
             <div className='input-row'>

@@ -46,6 +46,7 @@ export enum SettingTypes {
     THEME = 'Theme',
     NOTIFICATION_SOUNDS = 'Notification Sounds',
     VOLUME = 'Volume',
+    TIMER_LENGTH = 'Timer Length',
     POMO_TIME = 'Pomodoro Time',
     SHORT_BREAK_TIME = 'Short Break Time',
     LONG_BREAK_TIME = 'Long Break Time'
@@ -55,7 +56,8 @@ export const defaultSetting: TSetting = {
     background_image: 'https://images.pexels.com/photos/1367192/pexels-photo-1367192.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     alarm: '',
     volume: 50,
-    pomo_time: 1200,
+    timer_length: 1500,
+    pomo_time: 1500,
     short_break_time: 300,
     long_break_time: 600,
 }

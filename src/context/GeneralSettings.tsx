@@ -23,6 +23,7 @@ export const GeneralSettings = ({ children } : IGeneralSettingsProps) => {
     useState(defaultSetting);
 
   const updateSettings = (setting: SettingTypes, newValue: any) => {
+    console.log(setting, newValue);
     switch (setting) {
       case SettingTypes.THEME:
         setCurrentSetting({ ...currentSetting, background_image: newValue });
@@ -33,10 +34,14 @@ export const GeneralSettings = ({ children } : IGeneralSettingsProps) => {
       case SettingTypes.VOLUME:
         setCurrentSetting({ ...currentSetting, volume: newValue });
         break;
+      case SettingTypes.TIMER_LENGTH: 
+        setCurrentSetting({ ...currentSetting, timer_length: newValue});
+        break;
       case SettingTypes.POMO_TIME:
         setCurrentSetting({ ...currentSetting, pomo_time: newValue });
         break;
       case SettingTypes.LONG_BREAK_TIME:
+        console.log('long break set');
         setCurrentSetting({ ...currentSetting, long_break_time: newValue });
         break;
       case SettingTypes.SHORT_BREAK_TIME:
