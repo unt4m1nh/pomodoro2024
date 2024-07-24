@@ -7,14 +7,14 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { faExpand } from '@fortawesome/free-solid-svg-icons';
-import { faGear } from '@fortawesome/free-solid-svg-icons';
-import { faListCheck } from '@fortawesome/free-solid-svg-icons';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import alarm1 from '../assets/audio/alarm-clock-short-6402.mp3';
 import { useAppState } from '../context/GeneralSettings';
 import { TTask } from '../global/types';
 import Clock from '../components/Clock/Clock';
+import { ClockTypes } from '../global/const';
+import Header from '../components/Header/Header';
 
 const Home : typeof React.FC = () => {
   //const [time, setTime] = useState(1200);
@@ -30,10 +30,7 @@ const Home : typeof React.FC = () => {
   const [viewWidth, setViewWidth] = useState(window.innerWidth);
   const [viewHeight, setViewHeight] = useState(window.innerHeight);
 
-  const settingBtnRef = useRef(null);
   const btnPlayAudioRef = useRef(null);
-
-  const [showSetting, setShowSetting] = useState(false);
   const time = new Date();
   time.setSeconds(time.getSeconds() + 600);
 
@@ -172,26 +169,7 @@ const Home : typeof React.FC = () => {
         }}
       ></div>
       <div className={!isFullScreen ? 'header' : 'hide'}>
-        <h1>Focusly</h1>
-        <div
-          className='btn-setting'
-          ref={settingBtnRef}
-          onClick={() => {
-            setShowSetting(!showSetting);
-          }}
-        >
-          <p>Settings</p>
-          <FontAwesomeIcon icon={faGear} size='xl' />
-        </div>
-        <div
-          className='btn-task'
-          onClick={() => {
-            setShowTask(true);
-          }}
-        >
-          <p>Task List</p>
-          <FontAwesomeIcon icon={faListCheck} size='xl' />
-        </div>
+        <Header />
       </div>
       <div className='content'>
         <div className='content-mode-selection'>
@@ -220,7 +198,7 @@ const Home : typeof React.FC = () => {
             Long Break
           </div>
         </div>
-        <Clock mode='Digital' perTimeLeft={100} currentTask={null}/>
+        <Clock mode={ClockTypes.DIGITAL} perTimeLeft={100} currentTask={null}/>
         <audio
           ref={btnPlayAudioRef}
           src={''}

@@ -3,17 +3,13 @@ import { useTimer } from 'react-timer-hook';
 import ClockController from './ClockController';
 import { useAppState } from '../../context/GeneralSettings';
 import { useState } from 'react';
+import AnalogClock from './AnalogClock';
 
 interface IClockProps {
   mode: 'Digital' | 'Analog';
   perTimeLeft: number;
   currentTask: TTask | null;
 }
-
-const circleWidth = 400;
-const strokeWidth = 10;
-const radius = (circleWidth - strokeWidth) / 2;
-const circumference = radius * 2 * Math.PI;
 
 const Clock = ({ mode, perTimeLeft, currentTask }: IClockProps) => {
   const time = new Date();
@@ -31,8 +27,6 @@ const Clock = ({ mode, perTimeLeft, currentTask }: IClockProps) => {
       },
     });
 
-  const dashOffset = circumference - (circumference * perTimeLeft) / 100;
-
   return (
     <>
       {mode === 'Digital' ? (
@@ -47,36 +41,7 @@ const Clock = ({ mode, perTimeLeft, currentTask }: IClockProps) => {
           </h1>
         </>
       ) : (
-        <svg
-          width={circleWidth}
-          height={circleWidth}
-          viewBox={`0 0 ${circleWidth} ${circleWidth}`}
-          className='progess-container'
-          style={{ display: 'none' }}
-        >
-          <circle
-            cx={circleWidth / 2}
-            cy={circleWidth / 2}
-            strokeWidth={strokeWidth}
-            r={radius}
-            className='background-circle'
-          ></circle>
-          <circle
-            cx={circleWidth / 2}
-            cy={circleWidth / 2}
-            strokeWidth={strokeWidth}
-            r={radius}
-            className='progress-circle'
-            style={{
-              strokeDasharray: circumference,
-              strokeDashoffset: dashOffset,
-            }}
-            transform={`rotate(-90 ${circleWidth / 2} ${circleWidth / 2})`}
-          ></circle>
-          <text className='time' x='7%' y='55%'>{`${
-            minutes >= 10 ? minutes : '0' + minutes
-          } : ${seconds >= 10 ? seconds : '0' + seconds}`}</text>
-        </svg>
+        <AnalogClock minutes={minutes} seconds={seconds} perTimeLeft={perTimeLeft} />
       )}
       <ClockController
         didStart={didStart}
