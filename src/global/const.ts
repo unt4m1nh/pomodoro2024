@@ -59,3 +59,14 @@ export const defaultSetting: TSetting = {
     short_break_time: 300,
     long_break_time: 600,
 }
+
+export enum ClockTypes {
+    DIGITAL = 'Digital',
+    ANALOG = 'Analog'
+}
+
+export enum DefaultTimeValues {
+  POMO_TIME = 25 * 60,
+  SHORT_BREAK = 5 * 60,
+  LONG_BREAK = 10 * 60
+}
