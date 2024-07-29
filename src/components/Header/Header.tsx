@@ -1,7 +1,11 @@
 import { faGear, faListCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Header : React.FC = () => {
+interface IHeaderProps {
+    showTask: () => void;
+}
+
+const Header = ({ showTask } : IHeaderProps) => {
   return <>
         <h1>Focusly</h1>
         <div
@@ -14,8 +18,7 @@ const Header : React.FC = () => {
         </div>
         <div
             className='btn-task'
-            onClick={() => {
-            } }
+            onClick={showTask}
         >
             <p>Task List</p>
             <FontAwesomeIcon icon={faListCheck} size='xl' />

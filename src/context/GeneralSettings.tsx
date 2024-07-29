@@ -2,11 +2,17 @@ import React, { ReactNode , useContext, useState } from 'react';
 import { defaultSetting, SettingTypes } from '../global/const.ts';
 import { TSetting } from '../global/types.ts';
 
+/**
+ * Interface for the application context.
+ */
 interface IAppContext {
   currentSetting: TSetting;
   updateSettings: (setting: SettingTypes, newValue: any) => void;
 }
 
+/**
+ * Props interface for the GeneralSettings component.
+ */
 interface IGeneralSettingsProps {
     children: typeof ReactNode;
 }
@@ -14,14 +20,27 @@ interface IGeneralSettingsProps {
 // Context type / interface
 export const AppContext  = React.createContext({} as IAppContext);
 
+/**
+ * Custom hook to access the application state.
+ */
 export const useAppState = () => {
   return useContext(AppContext);
 };
 
-export const GeneralSettings = ({ children } : IGeneralSettingsProps) => {
+/**
+ * Component for managing general settings.
+ * @param {IGeneralSettingsProps} props - The component props.
+ * @returns {JSX.Element} - The rendered component.
+ */
+export const GeneralSettings = ({ children } : IGeneralSettingsProps): JSX.Element => {
   const [currentSetting, setCurrentSetting] =
     useState(defaultSetting);
 
+  /**
+   * Updates the specified setting with the new value.
+   * @param {SettingTypes} setting - The setting to update.
+   * @param {any} newValue - The new value for the setting.
+   */
   const updateSettings = (setting: SettingTypes, newValue: any) => {
     console.log(setting, newValue);
     switch (setting) {

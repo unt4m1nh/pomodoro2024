@@ -86,14 +86,14 @@
     margin-top: 1.5rem;
 }
 
-.content .input-row {
+.input-row {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 2rem;
 }
 
-.content input {
+input {
     width: 350px;
     height: 3rem;
     border: 2px solid var(--dawn-blue);
@@ -196,7 +196,7 @@
     border-radius: 10px;
     font-size: 18px;
     font-weight: 600;
-    color: white;
+    color: black;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
