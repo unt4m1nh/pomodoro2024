@@ -9,6 +9,7 @@ import { TTask } from '../../global/types';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useState } from 'react';
 import styles from './index.module.scss';
+import ButtonMode from '../Button/Mode/ButtonMode';
 
 interface ITasksProps {
   isShow: boolean;
@@ -145,15 +146,22 @@ const Tasks = ({ isShow, hideTasks }: ITasksProps) => {
             </Droppable>
           </div>
         </DragDropContext>
-      </div>
-      <div className={styles['control-btn']}>
-        <button onClick={clearTask}>Clear Task</button>
-        <FontAwesomeIcon
-          icon={faXmark}
-          size='2xl'
-          onClick={hideTasks}
-          className={styles['icon']}
-        />
+        <div className={styles['control-btn']}>
+          {/* <button onClick={clearTask}>Clear Task</button> */}
+          <ButtonMode
+              onClick={clearTask}
+              color='#fff'
+              size="small"
+            >
+              Clear task
+            </ButtonMode>
+          <FontAwesomeIcon
+            icon={faXmark}
+            size='2xl'
+            onClick={hideTasks}
+            className={styles['icon']}
+          />
+        </div>
       </div>
     </div>
   );

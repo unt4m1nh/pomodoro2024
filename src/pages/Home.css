@@ -157,20 +157,6 @@ input {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
-.task-container-active .control-btn {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: fit-content;
-    padding: 0.25rem;
-    background-color: var(--neon-blue);
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    display: flex;
-    flex-direction: row;
-    padding: 10px;
-    gap: 1rem;
-}
-
 .task-content {
     display: flex;
     flex-direction: column;
