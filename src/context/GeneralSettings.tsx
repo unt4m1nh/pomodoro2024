@@ -1,5 +1,5 @@
-import React, { ReactNode , useContext, useState } from 'react';
-import { defaultSetting, SettingTypes } from '../global/const.ts';
+import React, { ReactNode, useContext, useState } from 'react';
+import { defaultSetting, Modes, SettingTypes } from '../global/const.ts';
 import { TSetting } from '../global/types.ts';
 
 /**
@@ -8,17 +8,18 @@ import { TSetting } from '../global/types.ts';
 interface IAppContext {
   currentSetting: TSetting;
   updateSettings: (setting: SettingTypes, newValue: any) => void;
+  changeMode: (mode: string) => void;
 }
 
 /**
  * Props interface for the GeneralSettings component.
  */
 interface IGeneralSettingsProps {
-    children: ReactNode;
+  children: ReactNode;
 }
 
 // Context type / interface
-export const AppContext  = React.createContext({} as IAppContext);
+export const AppContext = React.createContext({} as IAppContext);
 
 /**
  * Custom hook to access the application state.
@@ -32,9 +33,10 @@ export const useAppState = () => {
  * @param {IGeneralSettingsProps} props - The component props.
  * @returns {JSX.Element} - The rendered component.
  */
-export const GeneralSettings = ({ children } : IGeneralSettingsProps): JSX.Element => {
-  const [currentSetting, setCurrentSetting] =
-    useState(defaultSetting);
+export const GeneralSettings = ({
+  children,
+}: IGeneralSettingsProps): JSX.Element => {
+  const [currentSetting, setCurrentSetting] = useState(defaultSetting);
 
   /**
    * Updates the specified setting with the new value.
@@ -53,19 +55,43 @@ export const GeneralSettings = ({ children } : IGeneralSettingsProps): JSX.Eleme
       case SettingTypes.VOLUME:
         setCurrentSetting({ ...currentSetting, volume: newValue });
         break;
-      case SettingTypes.TIMER_LENGTH: 
-        setCurrentSetting({ ...currentSetting, timer_length: newValue});
+      case SettingTypes.TIMER_LENGTH:
+        setCurrentSetting({ ...currentSetting, timer_length: newValue });
         break;
       case SettingTypes.POMO_TIME:
         setCurrentSetting({ ...currentSetting, pomo_time: newValue });
         break;
       case SettingTypes.LONG_BREAK_TIME:
-        console.log('long break set');
         setCurrentSetting({ ...currentSetting, long_break_time: newValue });
         break;
       case SettingTypes.SHORT_BREAK_TIME:
         setCurrentSetting({ ...currentSetting, short_break_time: newValue });
         break;
+      case SettingTypes.MODE:
+        setCurrentSetting({ ...currentSetting, mode: newValue });
+        break;
+    }
+  };
+
+  const changeMode = (mode: string) => {
+    if (mode === Modes.POMODORO) {
+      setCurrentSetting({
+        ...currentSetting,
+        mode: Modes.POMODORO,
+        timer_length: currentSetting.pomo_time,
+      });
+    } else if (mode === Modes.SHORT_BREAK) {
+      setCurrentSetting({
+        ...currentSetting,
+        mode: Modes.SHORT_BREAK,
+        timer_length: currentSetting.short_break_time,
+      });
+    } else {
+      setCurrentSetting({
+        ...currentSetting,
+        mode: Modes.LONG_BREAK,
+        timer_length: currentSetting.long_break_time,
+      });
     }
   };
 
@@ -74,6 +100,7 @@ export const GeneralSettings = ({ children } : IGeneralSettingsProps): JSX.Eleme
       value={{
         currentSetting,
         updateSettings,
+        changeMode,
       }}
     >
       {children}

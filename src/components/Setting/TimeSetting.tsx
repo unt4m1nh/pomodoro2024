@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ButtonMode from '../Button/Mode/ButtonMode';
 import { useAppState } from '../../context/GeneralSettings';
 import { SettingTypes } from '../../global/const';
+import { Modes } from '../../global/const';
 
 const TimeSetting: React.FC = () => {
   // Your component logic here
@@ -16,12 +17,37 @@ const TimeSetting: React.FC = () => {
     currentSetting.long_break_time / 60
   );
 
-  const handleChangeFocusTime = () => {
-    // Your logic here
+  useEffect(() => {
     updateSettings(SettingTypes.POMO_TIME, focusTime * 60);
+    if (currentSetting.mode === Modes.POMODORO) {
+      updateSettings(SettingTypes.POMO_TIME, focusTime * 60);
+    }
+  }, [focusTime]);
+
+  useEffect(() => {
     updateSettings(SettingTypes.SHORT_BREAK_TIME, shortBreakTime * 60);
+    if (currentSetting.mode === Modes.SHORT_BREAK) {
+      updateSettings(SettingTypes.SHORT_BREAK_TIME, shortBreakTime * 60);
+    }
+  }, [shortBreakTime]);
+
+  useEffect(() => {
     updateSettings(SettingTypes.LONG_BREAK_TIME, longBreakTime * 60);
+    if (currentSetting.mode === Modes.LONG_BREAK) {
+      updateSettings(SettingTypes.LONG_BREAK_TIME, longBreakTime * 60);
+    }
+  }, [longBreakTime]);
+
+  const handleChangeMode = () => {
+    if (currentSetting.mode === Modes.POMODORO) {
+      updateSettings(SettingTypes.TIMER_LENGTH, focusTime * 60);
+    } else if (currentSetting.mode === Modes.SHORT_BREAK) {
+      updateSettings(SettingTypes.TIMER_LENGTH, shortBreakTime * 60);
+    } else {
+      updateSettings(SettingTypes.TIMER_LENGTH, longBreakTime * 60);
+    }
   };
+
   return (
     // Your JSX code here
     <div>
@@ -54,7 +80,7 @@ const TimeSetting: React.FC = () => {
         size='small'
         color='red'
         textColor='#FFF'
-        onClick={handleChangeFocusTime}
+        onClick={handleChangeMode}
       >
         Apply
       </ButtonMode>

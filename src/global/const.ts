@@ -52,6 +52,13 @@ export enum SettingTypes {
     LONG_BREAK_TIME = 'Long Break Time',
     FOCUS_LEVEL = 'Focus Level',
     ACCOUNT = 'Account',
+    MODE = 'Mode',
+}
+
+export enum Modes {
+  POMODORO = 'Pomodoro',
+  SHORT_BREAK = 'Short break',
+  LONG_BREAK = 'Long break',
 }
 
 export const defaultSetting: TSetting = {
@@ -62,6 +69,7 @@ export const defaultSetting: TSetting = {
     pomo_time: 1500,
     short_break_time: 300,
     long_break_time: 600,
+    mode: Modes.POMODORO,
 }
 
 export enum ClockTypes {

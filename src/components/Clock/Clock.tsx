@@ -1,6 +1,6 @@
 import { useTimer } from 'react-timer-hook';
 import ClockController from './ClockController';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AnalogClock from './AnalogClock';
 import Mode from '../Mode/Mode';
 import { TTask } from '../../global/types';
@@ -37,6 +37,14 @@ const Clock = ({ mode, perTimeLeft, currentTask }: IClockProps) => {
     restart(newTime, false);
     setDidStart(false);
   };
+
+  // Listen to any changes in the timer length and update the timer accordingly
+  useEffect(() => {
+    const newTime = new Date();
+    newTime.setSeconds(newTime.getSeconds() + currentSetting.timer_length);
+    restart(newTime, false);
+    setDidStart(false);
+  }, [currentSetting.timer_length]);
 
   return (
     <>

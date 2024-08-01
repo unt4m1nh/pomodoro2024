@@ -1,16 +1,10 @@
 import { useState } from 'react';
 import { useAppState } from '../../context/GeneralSettings';
-import { SettingTypes } from '../../global/const';
+import { Modes, SettingTypes } from '../../global/const';
 import React from 'react';
 
 //@ts-ignore
 import styles from './index.module.scss';
-
-enum Modes {
-  POMODORO = 'Pomodoro',
-  SHORT_BREAK = 'Short break',
-  LONG_BREAK = 'Long break',
-}
 
 interface IModeProps {
   onChangeMode: (timerLength: number) => void;
@@ -18,22 +12,19 @@ interface IModeProps {
 
 const Mode = ({ onChangeMode }: IModeProps) => {
   const [mode, setMode] = useState(Modes.POMODORO);
-  const { currentSetting, updateSettings } = useAppState();
+  const { currentSetting, changeMode } = useAppState();
   console.log(currentSetting.timer_length);
   const handleChangeMode = (targetMode: string) => {
     if (targetMode === Modes.POMODORO) {
-      updateSettings(SettingTypes.TIMER_LENGTH, currentSetting.pomo_time);
+      changeMode(Modes.POMODORO)
       setMode(Modes.POMODORO);
       onChangeMode(currentSetting.pomo_time);
     } else if (targetMode === Modes.SHORT_BREAK) {
-      updateSettings(
-        SettingTypes.TIMER_LENGTH,
-        currentSetting.short_break_time
-      );
+      changeMode(Modes.SHORT_BREAK)
       setMode(Modes.SHORT_BREAK);
       onChangeMode(currentSetting.short_break_time);
     } else {
-      updateSettings(SettingTypes.TIMER_LENGTH, currentSetting.long_break_time);
+      changeMode(Modes.LONG_BREAK)
       setMode(Modes.LONG_BREAK);
       onChangeMode(currentSetting.long_break_time);
     }

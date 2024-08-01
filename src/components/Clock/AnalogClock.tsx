@@ -1,3 +1,5 @@
+import React from "react";
+
 interface IAnalogClockProps {
   minutes: number;
   seconds: number;
