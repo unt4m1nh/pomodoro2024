@@ -8,8 +8,11 @@ import { useTasks } from '../../context/TasksContext';
 import { TTask } from '../../global/types';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useState } from 'react';
-import styles from './index.module.scss';
 import ButtonMode from '../Button/Mode/ButtonMode';
+import React from 'react';
+
+//@ts-ignore
+import styles from './index.module.scss';
 
 interface ITasksProps {
   isShow: boolean;

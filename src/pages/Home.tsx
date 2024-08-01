@@ -3,6 +3,7 @@ import './Home.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExpand } from '@fortawesome/free-solid-svg-icons';
 
+//@ts-ignore
 import alarm1 from '../assets/audio/alarm-clock-short-6402.mp3';
 import { useAppState } from '../context/GeneralSettings';
 import Clock from '../components/Clock/Clock';
@@ -10,19 +11,26 @@ import { ClockTypes } from '../global/const';
 import Header from '../components/Header/Header';
 import Tasks from '../components/Tasks/Tasks';
 import { useTasks } from '../context/TasksContext';
+import Setting from '../components/Setting/Setting';
+import { Coordinate } from '../global/types';
 
-const Home: typeof React.FC = () => {
-  //const [time, setTime] = useState(1200);
+const Home: React.FC = () => {
   const { currentSetting } = useAppState();
   const { currentTasks } = useTasks();
   const [showTask, setShowTask] = useState(false);
+  const [showSetting, setShowSetting] = useState(false);
+  const [settingPos, setSettingPos] = useState<Coordinate>({
+    x: 0,
+    y: 0,
+  });
 
   const [isFullScreen, setIsFullScreen] = useState(false);
 
   const [viewWidth, setViewWidth] = useState(window.innerWidth);
   const [viewHeight, setViewHeight] = useState(window.innerHeight);
 
-  const btnPlayAudioRef = useRef(null);
+  const btnPlayAudioRef = useRef<HTMLAudioElement | null>(null);
+  const settingBtnRef = useRef<HTMLDivElement | null>(null);
   const time = new Date();
   time.setSeconds(time.getSeconds() + 600);
 
@@ -33,6 +41,14 @@ const Home: typeof React.FC = () => {
       setViewWidth(window.innerWidth);
       setViewHeight(window.innerHeight);
     };
+
+    if (settingBtnRef.current) {
+      const rect = settingBtnRef.current.getBoundingClientRect();
+      setSettingPos({
+        x: rect.x,
+        y: rect.y,
+      });
+    }
 
     handleResize();
 
@@ -52,15 +68,15 @@ const Home: typeof React.FC = () => {
     setIsFullScreen(!isFullScreen);
   };
 
-  const playAlarm = () => {
-    new Audio(alarm1).play();
-  };
+  // const playAlarm = () => {
+  //   new Audio(alarm1).play();
+  // };
 
-  const playButtonClicked = () => {
-    if (btnPlayAudioRef.current) {
-      btnPlayAudioRef.current.play();
-    }
-  };
+  // const playButtonClicked = () => {
+  //   if (btnPlayAudioRef.current) {
+  //     btnPlayAudioRef.current.play();
+  //   }
+  // };
 
   return (
     <div>
@@ -76,7 +92,11 @@ const Home: typeof React.FC = () => {
         }}
       ></div>
       <div className={!isFullScreen ? 'header' : 'hide'}>
-        <Header showTask={() => setShowTask(true)} />
+        <Header
+          showTask={() => setShowTask(true)}
+          showSetting={() => setShowSetting(!showSetting)}
+          ref={settingBtnRef}
+        />
       </div>
       <div className='content'>
         <Clock
@@ -93,7 +113,7 @@ const Home: typeof React.FC = () => {
         icon={faExpand}
         size='3x'
       />
-      {/* {showSetting && <Setting posX={settingPos.posX} posY={settingPos.posY} />} */}
+      {showSetting && <Setting x={settingPos.x} y={settingPos.y} />}
       <div className='footer'></div>
     </div>
   );

@@ -5,6 +5,7 @@ import AnalogClock from './AnalogClock';
 import Mode from '../Mode/Mode';
 import { TTask } from '../../global/types';
 import { useAppState } from '../../context/GeneralSettings';
+import React from 'react';
 
 interface IClockProps {
   mode: 'Digital' | 'Analog';

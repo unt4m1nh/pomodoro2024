@@ -2,6 +2,7 @@ import { faRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ButtonMode from "../Button/Mode/ButtonMode";
 import { useState } from "react";
+import React from "react";
 
 interface IClockControllerProps {
     didStart: boolean;

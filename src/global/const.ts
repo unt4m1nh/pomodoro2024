@@ -49,7 +49,9 @@ export enum SettingTypes {
     TIMER_LENGTH = 'Timer Length',
     POMO_TIME = 'Pomodoro Time',
     SHORT_BREAK_TIME = 'Short Break Time',
-    LONG_BREAK_TIME = 'Long Break Time'
+    LONG_BREAK_TIME = 'Long Break Time',
+    FOCUS_LEVEL = 'Focus Level',
+    ACCOUNT = 'Account',
 }
 
 export const defaultSetting: TSetting = {
@@ -65,10 +67,4 @@ export const defaultSetting: TSetting = {
 export enum ClockTypes {
     DIGITAL = 'Digital',
     ANALOG = 'Analog'
-}
-
-export enum DefaultTimeValues {
-  POMO_TIME = 25 * 60,
-  SHORT_BREAK = 5 * 60,
-  LONG_BREAK = 10 * 60
 }

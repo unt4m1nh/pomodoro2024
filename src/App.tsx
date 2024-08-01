@@ -1,3 +1,4 @@
+import React from 'react';
 import './App.css';
 import GeneralSettings from './context/GeneralSettings';
 import TasksList from './context/TasksContext';

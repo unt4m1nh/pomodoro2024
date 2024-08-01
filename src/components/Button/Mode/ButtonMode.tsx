@@ -1,4 +1,6 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
+
+//@ts-ignore
 import styles from './button.module.scss'
 
 interface IButtonProps {
@@ -6,7 +8,7 @@ interface IButtonProps {
     color?: string;
     textColor?: string;
     size: 'small' | 'large';
-    children: typeof ReactNode;
+    children: ReactNode;
 }
 
 const ButtonMode = ({onClick, color, textColor, children, size}: IButtonProps) => {

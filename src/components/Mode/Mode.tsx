@@ -1,7 +1,10 @@
 import { useState } from 'react';
-import styles from './index.module.scss';
 import { useAppState } from '../../context/GeneralSettings';
 import { SettingTypes } from '../../global/const';
+import React from 'react';
+
+//@ts-ignore
+import styles from './index.module.scss';
 
 enum Modes {
   POMODORO = 'Pomodoro',

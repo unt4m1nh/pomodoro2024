@@ -10,14 +10,14 @@ interface ITasksContext {
 export const TasksContext = React.createContext({} as ITasksContext);
 
 interface ITasksListProps {
-  children: typeof React.ReactNode;
+  children: React.ReactNode;
 }
 export const useTasks = () => {
   return useContext(TasksContext) as ITasksContext;
 };
 
 export const TasksList = ({ children }: ITasksListProps) => {
-  const [currentTasks, setCurrentTasks] = useState([]);
+  const [currentTasks, setCurrentTasks] = useState<TTask[]>([]);
   const updateCurrentTasks = (newValue: TTask[]) => {
     setCurrentTasks(newValue);
   };

@@ -21,3 +21,9 @@ export type TTask = {
   id: number;
   name: string;
 };
+
+
+export type Coordinate = {
+  x: number;
+  y: number;
+};

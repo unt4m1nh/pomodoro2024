@@ -14,7 +14,7 @@ interface IAppContext {
  * Props interface for the GeneralSettings component.
  */
 interface IGeneralSettingsProps {
-    children: typeof ReactNode;
+    children: ReactNode;
 }
 
 // Context type / interface
