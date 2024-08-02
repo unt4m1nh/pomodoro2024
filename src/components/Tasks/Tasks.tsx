@@ -23,7 +23,7 @@ const Tasks = ({ isShow, hideTasks }: ITasksProps) => {
   const { currentTasks, updateCurrentTasks } = useTasks();
   const [taskValue, setTaskValue] = useState('' as string);
 
-  console.log('currentTasks is Array', Array.isArray(currentTasks));
+  console.log('currentTasks is Array',  Array.isArray(currentTasks));
 
   const handleDragAndDrop = (results: any) => {
     const { source, destination, type } = results;
@@ -65,7 +65,7 @@ const Tasks = ({ isShow, hideTasks }: ITasksProps) => {
       console.log('new task list', newTaskList);
       setTaskValue('');
       return updateCurrentTasks(newTaskList);
-    }
+    } 
   };
 
   const deleteTask = (index: number) => {
@@ -74,8 +74,6 @@ const Tasks = ({ isShow, hideTasks }: ITasksProps) => {
     if (currentTasks) {
       if (index === currentTasks.length) {
         deletedTask.pop();
-      } else if (index === 1) {
-        deletedTask.shift();
       } else {
         for (let i = index - 1; i < deletedTask.length - 1; i++) {
           deletedTask[i] = deletedTask[i + 1];
@@ -125,11 +123,7 @@ const Tasks = ({ isShow, hideTasks }: ITasksProps) => {
                   ref={provided.innerRef}
                 >
                   {currentTasks?.map((task: TTask, index: number) => (
-                    <Draggable
-                      draggableId={task.id.toString()}
-                      key={task.id}
-                      index={index}
-                    >
+                    <Draggable draggableId={task.id.toString()} key={task.id} index={index}>
                       {(provided: any) => (
                         <div
                           className={styles['task-item']}
@@ -157,9 +151,13 @@ const Tasks = ({ isShow, hideTasks }: ITasksProps) => {
         </DragDropContext>
         <div className={styles['control-btn']}>
           {/* <button onClick={clearTask}>Clear Task</button> */}
-          <ButtonMode onClick={clearTask} color='#fff' size='small'>
-            Clear task
-          </ButtonMode>
+          <ButtonMode
+              onClick={clearTask}
+              color='#fff'
+              size="small"
+            >
+              Clear task
+            </ButtonMode>
           <FontAwesomeIcon
             icon={faXmark}
             size='2xl'
