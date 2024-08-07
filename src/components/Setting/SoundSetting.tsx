@@ -39,7 +39,7 @@ const SoundSetting: React.FC = () => {
 
   return (
     // Add your JSX code here
-    <div className={styles['setting-content']}>
+    <div className={styles['setting-options']}>
       <h3>Select alarm sound</h3>
       <div className={styles['sound-list']}>
         {AlarmSounds.map((element, index) => (
@@ -67,11 +67,7 @@ const SoundSetting: React.FC = () => {
         id='myRange'
         onChange={handleChangeVolume}
       />
-
       <audio ref={alarmSoundRef} src={getAudio(alarm)}></audio>
-      <ButtonMode size='small' color='red' textColor='#FFF' onClick={() => {}}>
-        Apply
-      </ButtonMode>
     </div>
   );
 };

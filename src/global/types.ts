@@ -5,6 +5,7 @@ export type TSetting = TThemeSetting & TSoundSetting & TTimeSetting & TMode;
 
 export type TThemeSetting = {
   background_image: string;
+  theme_index: number;
 };
 
 export type TSoundSetting = {

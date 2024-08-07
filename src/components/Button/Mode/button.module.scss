@@ -4,19 +4,21 @@
     justify-content: center;
     cursor: pointer;
     color: #000;
-    border-radius: 3.125rem;
-}
-
-.large {
-    width: 9.375rem;
-    height: 3.125rem;
-    font-size: 1.25rem;
-    font-weight: 600;
+    border-radius: 0.6525rem;
+    text-transform: uppercase;
 }
 
 .small {
-    width: 6.25rem;
-    height: 2.5rem;
+    width: 96px;
+    height: 36px;
+    font-size: 1rem;
+    font-weight: 400;
+    //+text-transform: none !important;
+}
+
+.large {
+    width: 140px;
+    height: 48px;
     font-size: 1rem;
     font-weight: 500;
 }

@@ -84,7 +84,7 @@ const Home: React.FC = () => {
         className='bg-image'
         style={{
           backgroundImage: `url(${currentSetting.background_image})`,
-          backgroundSize: 'cover',
+          backgroundSize: '100% 100%',
           backgroundRepeat: 'no-repeat',
           width: viewWidth,
           height: viewHeight,
@@ -98,14 +98,12 @@ const Home: React.FC = () => {
           ref={settingBtnRef}
         />
       </div>
-      <div className='content'>
-        <Clock
-          mode={ClockTypes.DIGITAL}
-          perTimeLeft={100}
-          currentTask={currentTasks ? currentTasks[0] : null}
-        />
-        <audio ref={btnPlayAudioRef} src={''}></audio>
-      </div>
+      <Clock
+        mode={ClockTypes.DIGITAL}
+        perTimeLeft={100}
+        currentTask={currentTasks ? currentTasks[0] : null}
+      />
+      <audio ref={btnPlayAudioRef} src={''}></audio>
       <Tasks isShow={showTask} hideTasks={() => setShowTask(false)} />
       <FontAwesomeIcon
         onClick={toggleFullScreen}

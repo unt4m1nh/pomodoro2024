@@ -11,39 +11,30 @@ interface ThemeSettingProps {
 const ThemeSetting: React.FC = () => {
     // Implement your component logic here
     const [theme, setTheme] = React.useState(0);
-    const { updateSettings } = useAppState();
+    const { currentSetting, changeBackground } = useAppState();
 
     return (
        
         // JSX code for your component's UI
-        <div className={styles['setting-content']}>
+        <div className={styles['setting-options']}>
               <h3>Chose theme</h3>
               <div className={styles['theme-list']}>
                 {ThemeImages.map((element, index) => (
                   <div
                     key={element.id}
                     className={styles['image-container']}
-                    style={{
-                      border:
-                        theme === index ? '2px solid var(--neon-blue)' : 'none',
-                    }}
                     onClick={() => {
                       setTheme(element.id);
-                      updateSettings(SettingTypes.THEME, element.link);
+                      changeBackground(element.link, element.id);
                     }}
                   >
-                    <img src={element.link}></img>
+                    <img alt='bg-image'  style={{
+                      border:
+                        currentSetting.theme_index === element.id ? '3px solid var(--green-400)' : 'none',
+                    }} src={element.link}></img>
                   </div>
                 ))}
               </div>
-              <ButtonMode
-                color='red'
-                textColor='#FFF'
-                onClick={() => {}}
-                size='small'
-              >
-                Apply
-              </ButtonMode>
             </div>
     );
 };

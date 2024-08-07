@@ -1,5 +1,7 @@
 import React from 'react';
 import { SettingTypes } from '../../global/const';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import SettingNavigation from './SettingNavigation';
 import SoundSetting from './SoundSetting';
 import ThemeSetting from './ThemeSetting';
@@ -19,7 +21,7 @@ const Setting = ({ x, y }: ISettingProps) => {
 
   return (
     <div
-      style={{ position: 'fixed', top: y + 100, left: x - 400 }}
+      style={{ position: 'fixed', top: y + 100, left: x - 500 }}
       className={styles['setting-container']}
     >
       <div className={styles['body']}>
@@ -28,6 +30,12 @@ const Setting = ({ x, y }: ISettingProps) => {
           setSettingMode={setSettingMode}
         />
         <div className={styles['setting-content']}>
+          <div className={styles[
+            'setting-header'
+          ]}>
+            <h3 style={{visibility: 'hidden'}}>Settings</h3>
+            <FontAwesomeIcon size='xl' icon={faXmark} className={styles['close-btn']} />
+          </div>
           {settingMode === SettingTypes.THEME && <ThemeSetting />}
           {settingMode === SettingTypes.NOTIFICATION_SOUNDS && <SoundSetting />}
           {settingMode === SettingTypes.FOCUS_LEVEL && <TimeSetting />}

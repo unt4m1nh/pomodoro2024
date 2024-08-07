@@ -31,7 +31,6 @@ const Mode = ({ onChangeMode }: IModeProps) => {
   };
 
   return (
-    <>
       <div className={styles.option}>
         <div
           className={
@@ -70,7 +69,6 @@ const Mode = ({ onChangeMode }: IModeProps) => {
           Long Break
         </div>
       </div>
-    </>
   );
 };
 

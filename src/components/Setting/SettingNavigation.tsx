@@ -28,7 +28,7 @@ const SettingNavigation = ({
     // Add your JSX code here
     <div className={styles['setting-mode']}>
       <div className={styles['setting-header']}>
-        <h2>Settings</h2>
+        <h3>Settings</h3>
       </div>
       <div
         className={
@@ -40,7 +40,7 @@ const SettingNavigation = ({
           setSettingMode(SettingTypes.THEME);
         }}
       >
-        <FontAwesomeIcon icon={faImage} />
+        <FontAwesomeIcon icon={faImage} className={styles['icon']} />
         Theme
       </div>
       <div
@@ -53,7 +53,7 @@ const SettingNavigation = ({
           setSettingMode(SettingTypes.NOTIFICATION_SOUNDS);
         }}
       >
-        <FontAwesomeIcon icon={faMusic} />
+        <FontAwesomeIcon icon={faMusic} className={styles['icon']} />
         Sound
       </div>
       <div
@@ -66,7 +66,7 @@ const SettingNavigation = ({
           setSettingMode(SettingTypes.FOCUS_LEVEL);
         }}
       >
-        <FontAwesomeIcon icon={faClock} />
+        <FontAwesomeIcon icon={faClock} className={styles['icon']} />
         Focus Level
       </div>
       <div
@@ -79,7 +79,7 @@ const SettingNavigation = ({
           setSettingMode(SettingTypes.ACCOUNT);
         }}
       >
-        <FontAwesomeIcon icon={faUser} />
+        <FontAwesomeIcon icon={faUser} className={styles['icon']} />
         Account
       </div>
     </div>

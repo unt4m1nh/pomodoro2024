@@ -9,6 +9,7 @@ interface IAppContext {
   currentSetting: TSetting;
   updateSettings: (setting: SettingTypes, newValue: any) => void;
   changeMode: (mode: string) => void;
+  changeBackground: (url: string, index: number) => void;
 }
 
 /**
@@ -67,10 +68,15 @@ export const GeneralSettings = ({
       case SettingTypes.SHORT_BREAK_TIME:
         setCurrentSetting({ ...currentSetting, short_break_time: newValue });
         break;
-      case SettingTypes.MODE:
-        setCurrentSetting({ ...currentSetting, mode: newValue });
-        break;
     }
+  };
+
+  const changeBackground = (url: string, index: number) => {
+    setCurrentSetting({
+      ...currentSetting,
+      background_image: url,
+      theme_index: index,
+    });
   };
 
   const changeMode = (mode: string) => {
@@ -100,6 +106,7 @@ export const GeneralSettings = ({
       value={{
         currentSetting,
         updateSettings,
+        changeBackground,
         changeMode,
       }}
     >

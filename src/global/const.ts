@@ -70,6 +70,7 @@ export const defaultSetting: TSetting = {
     short_break_time: 300,
     long_break_time: 600,
     mode: Modes.POMODORO,
+    theme_index: 0,
 }
 
 export enum ClockTypes {

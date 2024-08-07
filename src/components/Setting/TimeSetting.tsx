@@ -4,6 +4,9 @@ import { useAppState } from '../../context/GeneralSettings';
 import { SettingTypes } from '../../global/const';
 import { Modes } from '../../global/const';
 
+//@ts-ignore
+import styles from './index.module.scss';
+
 const TimeSetting: React.FC = () => {
   // Your component logic here
   const { currentSetting, updateSettings } = useAppState();
@@ -50,7 +53,7 @@ const TimeSetting: React.FC = () => {
 
   return (
     // Your JSX code here
-    <div>
+    <div className={styles['setting-options']}>
       <h3>Focus Level</h3>
       <p>Pomodoro Time</p>
       <input
@@ -77,10 +80,10 @@ const TimeSetting: React.FC = () => {
         onChange={(e) => setLongBreakTime(Number(e.target.value))}
       />
       <ButtonMode
-        size='small'
-        color='red'
+        color='var(--green-400)'
         textColor='#FFF'
         onClick={handleChangeMode}
+        size='small'
       >
         Apply
       </ButtonMode>

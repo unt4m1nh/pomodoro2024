@@ -68,24 +68,6 @@
     z-index: -1;
 }
 
-.content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: 'Poppins', sans-serif;
-    color: #fff;
-    z-index: 1;
-}
-
-.content-clock-buttons {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: fit-content;
-    gap: 1rem;
-    margin-top: 1.5rem;
-}
-
 .input-row {
     display: flex;
     flex-direction: row;
@@ -99,16 +81,9 @@
     font-style: italic;
 }
 
-
-.time {
-    font-weight: 600;
-    font-size: 10rem;
-    font-family: 'Courier Prime', monospace;
-}
-
 .btn-fullscreen {
     position: fixed;
-    top: 700px;
+    top: 85%;
     left: 90%;
     cursor: pointer;
 }
