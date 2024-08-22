@@ -24,7 +24,8 @@ interface ITasksProps {
 const Tasks = ({ isShow, hideTasks }: ITasksProps) => {
   const { currentTasks, updateCurrentTasks } = useTasks();
   const [taskValue, setTaskValue] = useState('' as string);
-  const [eddtingTask, setEdditingTask] = useState<number | null>(null);
+  const [eddtingTask, setEdditingTask] = useState<boolean>(false);
+  const [selectedTask, setSelectedTask] = useState<number | null>(null);
   const [showItemAction, setShowItemAction] = useState(false);
   const taskRef = useRef<HTMLDivElement | null>(null);
 
@@ -95,6 +96,31 @@ const Tasks = ({ isShow, hideTasks }: ITasksProps) => {
     }
   };
 
+  const editTask = (index: number, taskName: string) => {
+    console.log('edit task', index);
+    const editTask = [...(currentTasks ?? [])];
+    if (editTask) {
+      editTask.forEach((task: TTask) => {
+        if (task.id === index) {
+          task.name = taskName;
+        }
+      });
+      updateCurrentTasks(editTask);
+    }
+    setShowItemAction(false);
+    setEdditingTask(false);
+  };
+
+  const handleKeyDown = (index: number, e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      const input: HTMLInputElement | null = document.getElementById(
+        'input-task-edit'
+      ) as HTMLInputElement;
+      const newTaskName = input.value;
+      editTask(index, newTaskName);
+    }
+  };
+
   const clearTask = () => {
     updateCurrentTasks([]);
   };
@@ -153,26 +179,40 @@ const Tasks = ({ isShow, hideTasks }: ITasksProps) => {
                           {...provided.draggableProps}
                           ref={provided.innerRef}
                         >
-                          <div ref={taskRef} className={styles['task-item']}>
-                            <p className={styles['task-title']}>{task.name}</p>
-                            <FontAwesomeIcon
-                              onClick={() => {
-                                setEdditingTask(task.id);
-                                setShowItemAction(!showItemAction);
-                              }}
-                              icon={faEllipsisV}
-                              className={styles['icon-delete']}
-                            ></FontAwesomeIcon>
-                            <ItemAction
-                              isShow={showItemAction && eddtingTask === task.id}
-                              onDelete={() => {
-                                deleteTask(index);
-                              }}
-                              onEdit={() => {
-                                console.log('edit task');
-                              }}
-                            />
-                          </div>
+                          {!eddtingTask ? (
+                            <div ref={taskRef} className={styles['task-item']}>
+                              <p className={styles['task-title']}>
+                                {task.name}
+                              </p>
+                              <FontAwesomeIcon
+                                onClick={() => {
+                                  setSelectedTask(task.id);
+                                  setShowItemAction(!showItemAction);
+                                }}
+                                icon={faEllipsisV}
+                                className={styles['icon-delete']}
+                              ></FontAwesomeIcon>
+                              <ItemAction
+                                isShow={
+                                  showItemAction && selectedTask === task.id
+                                }
+                                onDelete={() => {
+                                  deleteTask(index);
+                                }}
+                                onEdit={() => {
+                                  setEdditingTask(true);
+                                }}
+                              />
+                            </div>
+                          ) : (
+                            <div className={styles['task-item']}>
+                              <input
+                                id='input-task-edit'
+                                type='text'
+                                onKeyDown={(e) => handleKeyDown(task.id, e)}
+                              />
+                            </div>
+                          )}
                         </div>
                       )}
                     </Draggable>
@@ -192,7 +232,7 @@ const Tasks = ({ isShow, hideTasks }: ITasksProps) => {
           <FontAwesomeIcon
             icon={faXmark}
             size='2xl'
-            style={{color: 'var(--green-400)'}}
+            style={{ color: 'var(--green-400)' }}
             onClick={hideTasks}
             className={styles['icon']}
           />

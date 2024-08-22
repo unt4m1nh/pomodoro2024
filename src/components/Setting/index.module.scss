@@ -92,6 +92,22 @@ $dawn-blue: #546fff;
   h3, p {
     margin: 0;
   }
+
+  input[type=number] {
+    background-color: var(--stroke-primary);
+    border: none !important;
+    padding: 0.5rem;
+    border-radius: 0.625rem;
+    background-color: var(--green-300);
+
+    :focus {
+      border: 1px var(--green-200) solid;
+    }
+
+    ::-webkit-inner-spin-button ::-webkit-outer-spin-button {
+      cursor: pointer;
+    }
+  }
 }
 
 .content-center {

@@ -84,6 +84,7 @@ const Clock = ({ mode, perTimeLeft, currentTask }: IClockProps) => {
             newTime.getSeconds() + currentSetting.timer_length
           );
           restart(newTime, false);
+          setDidStart(false);
         }}
         onResume={resume}
       />
