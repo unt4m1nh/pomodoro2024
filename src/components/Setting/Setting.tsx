@@ -14,9 +14,10 @@ import styles from './index.module.scss';
 interface ISettingProps {
   x: number;
   y: number;
+  hideSetting: () => void;
 }
 
-const Setting = ({ x, y }: ISettingProps) => {
+const Setting = ({ x, y, hideSetting }: ISettingProps) => {
   const [settingMode, setSettingMode] = React.useState(SettingTypes.THEME);
 
   return (
@@ -34,7 +35,7 @@ const Setting = ({ x, y }: ISettingProps) => {
             'setting-header'
           ]}>
             <h3 style={{visibility: 'hidden'}}>Settings</h3>
-            <FontAwesomeIcon size='xl' icon={faXmark} className={styles['close-btn']} />
+            <FontAwesomeIcon onClick={hideSetting} size='xl' icon={faXmark} className={styles['close-btn']} />
           </div>
           {settingMode === SettingTypes.THEME && <ThemeSetting />}
           {settingMode === SettingTypes.NOTIFICATION_SOUNDS && <SoundSetting />}

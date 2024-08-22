@@ -111,7 +111,7 @@ const Home: React.FC = () => {
         icon={faExpand}
         size='3x'
       />
-      {showSetting && <Setting x={settingPos.x} y={settingPos.y} />}
+      {showSetting && <Setting x={settingPos.x} y={settingPos.y} hideSetting={() => setShowSetting(false)} />}
       <div className='footer'></div>
     </div>
   );

@@ -2,17 +2,19 @@ import {
   faPlusCircle,
   faTrashCan,
   faXmark,
+  faEllipsisV,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTasks } from '../../context/TasksContext';
 import { TTask } from '../../global/types';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ButtonMode from '../Button/Mode/ButtonMode';
 import React from 'react';
 
 //@ts-ignore
 import styles from './index.module.scss';
+import ItemAction from './ItemAction';
 
 interface ITasksProps {
   isShow: boolean;
@@ -22,8 +24,15 @@ interface ITasksProps {
 const Tasks = ({ isShow, hideTasks }: ITasksProps) => {
   const { currentTasks, updateCurrentTasks } = useTasks();
   const [taskValue, setTaskValue] = useState('' as string);
+  const [eddtingTask, setEdditingTask] = useState<number | null>(null);
+  const [showItemAction, setShowItemAction] = useState(false);
+  const taskRef = useRef<HTMLDivElement | null>(null);
 
-  console.log('currentTasks is Array',  Array.isArray(currentTasks));
+  useEffect(() => {
+    console.log(taskRef.current?.getBoundingClientRect());
+  }, []);
+
+  console.log('currentTasks is Array', Array.isArray(currentTasks));
 
   const handleDragAndDrop = (results: any) => {
     const { source, destination, type } = results;
@@ -65,7 +74,7 @@ const Tasks = ({ isShow, hideTasks }: ITasksProps) => {
       console.log('new task list', newTaskList);
       setTaskValue('');
       return updateCurrentTasks(newTaskList);
-    } 
+    }
   };
 
   const deleteTask = (index: number) => {
@@ -104,14 +113,24 @@ const Tasks = ({ isShow, hideTasks }: ITasksProps) => {
             value={taskValue}
             onChange={(e) => setTaskValue(e.target.value)}
           ></input>
-          <FontAwesomeIcon
-            className={styles['btn-add']}
-            icon={faPlusCircle}
-            size='3x'
+          <ButtonMode
             onClick={() => {
               addTask(taskValue);
             }}
-          ></FontAwesomeIcon>
+            color='var(--green-400)'
+            textColor='#fff'
+            size='large'
+          >
+            Add Task
+            <FontAwesomeIcon
+              className={styles['btn-add']}
+              icon={faPlusCircle}
+              size='lg'
+              onClick={() => {
+                addTask(taskValue);
+              }}
+            ></FontAwesomeIcon>
+          </ButtonMode>
         </div>
         <DragDropContext onDragEnd={handleDragAndDrop}>
           <div className={styles['task-list']}>
@@ -123,22 +142,37 @@ const Tasks = ({ isShow, hideTasks }: ITasksProps) => {
                   ref={provided.innerRef}
                 >
                   {currentTasks?.map((task: TTask, index: number) => (
-                    <Draggable draggableId={task.id.toString()} key={task.id} index={index}>
+                    <Draggable
+                      draggableId={task.id.toString()}
+                      key={task.id}
+                      index={index}
+                    >
                       {(provided: any) => (
                         <div
-                          className={styles['task-item']}
                           {...provided.dragHandleProps}
                           {...provided.draggableProps}
                           ref={provided.innerRef}
                         >
-                          <h3 className={styles['task-title']}>{task.name}</h3>
-                          <FontAwesomeIcon
-                            onClick={() => {
-                              deleteTask(task.id);
-                            }}
-                            icon={faTrashCan}
-                            className={styles['icon-delete']}
-                          ></FontAwesomeIcon>
+                          <div ref={taskRef} className={styles['task-item']}>
+                            <p className={styles['task-title']}>{task.name}</p>
+                            <FontAwesomeIcon
+                              onClick={() => {
+                                setEdditingTask(task.id);
+                                setShowItemAction(!showItemAction);
+                              }}
+                              icon={faEllipsisV}
+                              className={styles['icon-delete']}
+                            ></FontAwesomeIcon>
+                            <ItemAction
+                              isShow={showItemAction && eddtingTask === task.id}
+                              onDelete={() => {
+                                deleteTask(index);
+                              }}
+                              onEdit={() => {
+                                console.log('edit task');
+                              }}
+                            />
+                          </div>
                         </div>
                       )}
                     </Draggable>
@@ -151,16 +185,14 @@ const Tasks = ({ isShow, hideTasks }: ITasksProps) => {
         </DragDropContext>
         <div className={styles['control-btn']}>
           {/* <button onClick={clearTask}>Clear Task</button> */}
-          <ButtonMode
-              onClick={clearTask}
-              color='#fff'
-              size="small"
-            >
-              Clear task
-            </ButtonMode>
+          <div className={styles['btn-clear']} onClick={clearTask}>
+            Clear Task
+            <FontAwesomeIcon icon={faTrashCan} size='lg'></FontAwesomeIcon>
+          </div>
           <FontAwesomeIcon
             icon={faXmark}
             size='2xl'
+            style={{color: 'var(--green-400)'}}
             onClick={hideTasks}
             className={styles['icon']}
           />
