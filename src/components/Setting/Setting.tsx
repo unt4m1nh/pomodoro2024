@@ -22,7 +22,7 @@ const Setting = ({ x, y, hideSetting }: ISettingProps) => {
 
   return (
     <div
-      style={{ position: 'fixed', top: y + 100, left: x - 500 }}
+      style={{ position: 'fixed', top: y + 50, left: x - 500 }}
       className={styles['setting-container']}
     >
       <div className={styles['body']}>

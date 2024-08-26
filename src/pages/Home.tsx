@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './Home.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExpand } from '@fortawesome/free-solid-svg-icons';
+import { faCompress, faExpand } from '@fortawesome/free-solid-svg-icons';
 
 //@ts-ignore
-import alarm1 from '../assets/audio/alarm-clock-short-6402.mp3';
 import { useAppState } from '../context/GeneralSettings';
 import Clock from '../components/Clock/Clock';
 import { ClockTypes } from '../global/const';
@@ -34,7 +33,6 @@ const Home: React.FC = () => {
   const time = new Date();
   time.setSeconds(time.getSeconds() + 600);
 
-  console.log('Component Mounted');
   useEffect(() => {
     console.log('Mounted');
     const handleResize = () => {
@@ -68,16 +66,6 @@ const Home: React.FC = () => {
     setIsFullScreen(!isFullScreen);
   };
 
-  // const playAlarm = () => {
-  //   new Audio(alarm1).play();
-  // };
-
-  // const playButtonClicked = () => {
-  //   if (btnPlayAudioRef.current) {
-  //     btnPlayAudioRef.current.play();
-  //   }
-  // };
-
   return (
     <div>
       <div
@@ -93,7 +81,7 @@ const Home: React.FC = () => {
       ></div>
       <div className={!isFullScreen ? 'header' : 'hide'}>
         <Header
-          showTask={() => setShowTask(true)}
+          showTask={() => setShowTask(!showTask)}
           showSetting={() => setShowSetting(!showSetting)}
           ref={settingBtnRef}
         />
@@ -105,12 +93,24 @@ const Home: React.FC = () => {
       />
       <audio ref={btnPlayAudioRef} src={''}></audio>
       <Tasks isShow={showTask} hideTasks={() => setShowTask(false)} />
-      <FontAwesomeIcon
-        onClick={toggleFullScreen}
-        className='btn-fullscreen icon'
-        icon={faExpand}
-        size='3x'
-      />
+      {
+        !isFullScreen ? (
+
+          <FontAwesomeIcon
+            onClick={toggleFullScreen}
+            className='btn-fullscreen icon'
+            icon={faExpand}
+            size='3x'
+          />
+        ) : (
+          <FontAwesomeIcon
+            onClick={toggleFullScreen}
+            className='btn-fullscreen icon'
+            icon={faCompress}
+            size='3x'
+           />
+        )
+      }
       {showSetting && <Setting x={settingPos.x} y={settingPos.y} hideSetting={() => setShowSetting(false)} />}
       <div className='footer'></div>
     </div>
