@@ -124,7 +124,7 @@ $input-text-color: #333333;
 }
 
 .task-item .icon-delete {
-  margin-left: 0;
+  margin: 0 auto;
   cursor: pointer;
 }
 
@@ -159,6 +159,14 @@ $input-text-color: #333333;
   gap: 8px;
   padding-bottom: 1rem;
   padding-left: 1rem;
+}
+
+.icon-container {
+  width: 1.5rem;
+  height: 1.5rem;
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
 }
 
 .icon {

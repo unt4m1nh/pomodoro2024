@@ -1,24 +1,31 @@
 .btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: #000;
-    border-radius: 0.6525rem;
-    text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #000;
+  border-radius: 0.6525rem;
+  text-transform: uppercase;
+  box-shadow: #fff 4px 4px 0;
+  border: none !important;
+
+  /** Press button animation **/
+  &:active {
+    box-shadow: var(--stroke-primary) 2px 2px 0;
+    transform: translate(4px, 4px);
+  }
 }
 
 .small {
-    width: 96px;
-    height: 36px;
-    font-size: 1rem;
-    font-weight: 400;
-    //+text-transform: none !important;
+  width: 96px;
+  height: 36px;
+  font-size: 1rem;
+  font-weight: 400;
 }
 
 .large {
-    width: 140px;
-    height: 48px;
-    font-size: 1rem;
-    font-weight: 500;
+  width: 140px;
+  height: 48px;
+  font-size: 1rem;
+  font-weight: 500;
 }

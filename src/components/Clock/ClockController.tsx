@@ -52,10 +52,10 @@ const ClockController = ({
             icon={faRotateRight}
             size='2xl'
             onClick={() => {
-              onReset();
               setRotationDeg(rotationDeg + 360);
+              setTimeout(onReset, 500);
             }}
-            style={{ transform: `rotate(${rotationDeg}deg)` }}
+            style={{transitionDuration: '0.4s', transform: `rotate(${rotationDeg}deg)` }}
           />
         </>
       )}

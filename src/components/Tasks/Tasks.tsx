@@ -96,6 +96,14 @@ const Tasks = ({ isShow, hideTasks }: ITasksProps) => {
     }
   };
 
+  const onEdit = () => {
+    const input: HTMLInputElement | null = document.getElementById(
+      'input-task-edit'
+    ) as HTMLInputElement;
+    input?.focus(); 
+    setEdditingTask(true);
+  }
+
   const editTask = (index: number, taskName: string) => {
     console.log('edit task', index);
     const editTask = [...(currentTasks ?? [])];
@@ -184,14 +192,18 @@ const Tasks = ({ isShow, hideTasks }: ITasksProps) => {
                               <p className={styles['task-title']}>
                                 {task.name}
                               </p>
-                              <FontAwesomeIcon
+                              <div
+                                className={styles['icon-container']}
                                 onClick={() => {
                                   setSelectedTask(task.id);
                                   setShowItemAction(!showItemAction);
                                 }}
-                                icon={faEllipsisV}
-                                className={styles['icon-delete']}
-                              ></FontAwesomeIcon>
+                              >
+                                <FontAwesomeIcon
+                                  icon={faEllipsisV}
+                                  className={styles['icon-delete']}
+                                ></FontAwesomeIcon>
+                              </div>
                               <ItemAction
                                 isShow={
                                   showItemAction && selectedTask === task.id
@@ -199,9 +211,7 @@ const Tasks = ({ isShow, hideTasks }: ITasksProps) => {
                                 onDelete={() => {
                                   deleteTask(index);
                                 }}
-                                onEdit={() => {
-                                  setEdditingTask(true);
-                                }}
+                                onEdit={onEdit}
                               />
                             </div>
                           ) : (
