@@ -100,6 +100,7 @@ const Tasks = ({ isShow, hideTasks }: ITasksProps) => {
     const input: HTMLInputElement | null = document.getElementById(
       'input-task-edit'
     ) as HTMLInputElement;
+    console.log(input);
     input?.focus(); 
     setEdditingTask(true);
   }
@@ -124,6 +125,7 @@ const Tasks = ({ isShow, hideTasks }: ITasksProps) => {
       const input: HTMLInputElement | null = document.getElementById(
         'input-task-edit'
       ) as HTMLInputElement;
+      console.log(input);
       const newTaskName = input.value;
       editTask(index, newTaskName);
     }
