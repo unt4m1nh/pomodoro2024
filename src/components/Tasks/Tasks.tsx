@@ -29,10 +29,6 @@ const Tasks = ({ isShow, hideTasks }: ITasksProps) => {
   const [showItemAction, setShowItemAction] = useState(false);
   const taskRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    console.log(taskRef.current?.getBoundingClientRect());
-  }, []);
-
   console.log('currentTasks is Array', Array.isArray(currentTasks));
 
   const handleDragAndDrop = (results: any) => {
@@ -95,15 +91,6 @@ const Tasks = ({ isShow, hideTasks }: ITasksProps) => {
       return;
     }
   };
-
-  const onEdit = () => {
-    const input: HTMLInputElement | null = document.getElementById(
-      'input-task-edit'
-    ) as HTMLInputElement;
-    console.log(input);
-    input?.focus(); 
-    setEdditingTask(true);
-  }
 
   const editTask = (index: number, taskName: string) => {
     console.log('edit task', index);
@@ -213,12 +200,13 @@ const Tasks = ({ isShow, hideTasks }: ITasksProps) => {
                                 onDelete={() => {
                                   deleteTask(index);
                                 }}
-                                onEdit={onEdit}
+                                onEdit={() => setEdditingTask(true)}
                               />
                             </div>
                           ) : (
                             <div className={styles['task-item']}>
                               <input
+                                autoFocus
                                 id='input-task-edit'
                                 type='text'
                                 onKeyDown={(e) => handleKeyDown(task.id, e)}
