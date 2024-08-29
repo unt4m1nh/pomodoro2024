@@ -54,7 +54,7 @@ const Clock = ({ mode, perTimeLeft, currentTask }: IClockProps) => {
       <Mode onChangeMode={onChangeMode} />
       {mode === 'Digital' ? (
         <div className={styles['clock-container']}>
-          <h1 style={{ margin: 20 }}>
+          <h1 className={styles['task-title']} style={{ margin: 20 }}>
             {currentTask ? currentTask.name : 'You are not on any tasks !'}
           </h1>
           <h1 className={styles['timer']}>

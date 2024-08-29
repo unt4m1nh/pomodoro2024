@@ -3,15 +3,22 @@
 .hide {
     opacity: 0;
 }
+/* 
+@media screen and (min-width: 640px) {
+    .header h1 {
+        order: 1;
+        flex-grow: 1;
+    }
+
+    .header 
+}
 
 .header {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
     height: fit-content;
     padding: 1%;
-    gap: 0.5rem;
 }
 
 
@@ -20,8 +27,9 @@
     margin-left: 9%;
     font-family: 'Sofia', cursive;
     color: #Fff;
-    flex-grow: 1;
+
 }
+
 
 .header .btn-setting {
     display: flex;
@@ -59,7 +67,7 @@
 
 .header .btn-task:hover {
     cursor: pointer;
-}
+} */
 
 .bg-image {
     position: absolute;
@@ -82,6 +90,7 @@
 }
 
 .btn-fullscreen {
+    display: none;
     position: fixed;
     top: 85%;
     left: 90%;
@@ -182,3 +191,8 @@
     stroke-linejoin: square;
 }
 
+@media screen and (min-width: 640px) {
+    .btn-fullscreen {
+        display: block;
+    }
+}

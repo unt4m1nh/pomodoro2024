@@ -4,7 +4,8 @@ import { Modes } from "./const";
 export type TSetting = TThemeSetting & TSoundSetting & TTimeSetting & TMode;
 
 export type TThemeSetting = {
-  background_image: string;
+  desktop_background: string;
+  mobile_background: string;
   theme_index: number;
 };
 

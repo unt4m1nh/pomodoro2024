@@ -28,6 +28,8 @@ const Home: React.FC = () => {
   const [viewWidth, setViewWidth] = useState(window.innerWidth);
   const [viewHeight, setViewHeight] = useState(window.innerHeight);
 
+  const isMobile = window.innerWidth < 640;
+
   const btnPlayAudioRef = useRef<HTMLAudioElement | null>(null);
   const settingBtnRef = useRef<HTMLDivElement | null>(null);
   const time = new Date();
@@ -71,16 +73,17 @@ const Home: React.FC = () => {
       <div
         className='bg-image'
         style={{
-          backgroundImage: `url(${currentSetting.background_image})`,
+          backgroundImage: !isMobile ? `url(${currentSetting. desktop_background})` : `url(${currentSetting.mobile_background})`,
           backgroundSize: '100% 100%',
           backgroundRepeat: 'no-repeat',
-          width: viewWidth,
-          height: viewHeight,
+          width: '100%',
+          height: '100%',
           opacity: 0.8,
         }}
       ></div>
-      <div className={!isFullScreen ? 'header' : 'hide'}>
+      <div className={!isFullScreen ? '' : 'hide'}>
         <Header
+          isMobile={isMobile}
           showTask={() => setShowTask(!showTask)}
           showSetting={() => setShowSetting(!showSetting)}
           ref={settingBtnRef}
@@ -95,7 +98,6 @@ const Home: React.FC = () => {
       <Tasks isShow={showTask} hideTasks={() => setShowTask(false)} />
       {
         !isFullScreen ? (
-
           <FontAwesomeIcon
             onClick={toggleFullScreen}
             className='btn-fullscreen icon'

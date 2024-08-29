@@ -62,7 +62,8 @@ export enum Modes {
 }
 
 export const defaultSetting: TSetting = {
-    background_image: 'https://images.pexels.com/photos/1367192/pexels-photo-1367192.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    desktop_background: 'https://images.pexels.com/photos/1367192/pexels-photo-1367192.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    mobile_background: 'https://images.pexels.com/photos/1834399/pexels-photo-1834399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     alarm: '',
     volume: 50,
     timer_length: 1500,

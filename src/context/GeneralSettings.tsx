@@ -48,7 +48,7 @@ export const GeneralSettings = ({
     console.log(setting, newValue);
     switch (setting) {
       case SettingTypes.THEME:
-        setCurrentSetting({ ...currentSetting, background_image: newValue });
+        setCurrentSetting({ ...currentSetting, desktop_background: newValue });
         break;
       case SettingTypes.NOTIFICATION_SOUNDS:
         setCurrentSetting({ ...currentSetting, alarm: newValue });
@@ -74,7 +74,7 @@ export const GeneralSettings = ({
   const changeBackground = (url: string, index: number) => {
     setCurrentSetting({
       ...currentSetting,
-      background_image: url,
+      desktop_background: url,
       theme_index: index,
     });
   };
