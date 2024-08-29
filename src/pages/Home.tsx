@@ -69,7 +69,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div>
+    <>
       <div
         className='bg-image'
         style={{
@@ -113,9 +113,9 @@ const Home: React.FC = () => {
            />
         )
       }
-      {showSetting && <Setting x={settingPos.x} y={settingPos.y} hideSetting={() => setShowSetting(false)} />}
+      {showSetting && <Setting isMobile={isMobile} x={settingPos.x} y={settingPos.y} hideSetting={() => setShowSetting(false)} />}
       <div className='footer'></div>
-    </div>
+    </>
   );
 };
 

@@ -37,7 +37,9 @@ $input-text-color: #333333;
   top: 0;
   right: -100%;
   height: 100vh;
+  display: none;
   transition: $transition-duration;
+  
 }
 
 .btn-add {

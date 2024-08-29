@@ -2,7 +2,7 @@ $neon-blue: #00ffff;
 $dawn-blue: #546fff;
 
 .setting-container {
-  width: 31.25rem;
+  width: fit-content;
   height: fit-content;
   background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.35) 0rem 0.3125rem 0.9375rem;
@@ -11,6 +11,10 @@ $dawn-blue: #546fff;
   flex-direction: column;
   gap: 0.625rem;
   color: #000;
+
+  @media screen and (min-width: 640px) {
+    width: 31.25rem;
+  }
 }
 
 .setting-header {
@@ -119,9 +123,12 @@ $dawn-blue: #546fff;
 
 .theme-list {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
   gap: 0.625rem;
+  flex-direction: column;
+  @media screen and (min-width: 640px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 }
 
 .setting-content .image-container {

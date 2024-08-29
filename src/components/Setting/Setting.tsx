@@ -12,17 +12,18 @@ import AccountSetting from './AccountSetting';
 import styles from './index.module.scss';
 
 interface ISettingProps {
+  isMobile: boolean;
   x: number;
   y: number;
   hideSetting: () => void;
 }
 
-const Setting = ({ x, y, hideSetting }: ISettingProps) => {
+const Setting = ({isMobile, x, y, hideSetting }: ISettingProps) => {
   const [settingMode, setSettingMode] = React.useState(SettingTypes.THEME);
 
   return (
     <div
-      style={{ position: 'fixed', top: y + 50, left: x - 500 }}
+      style={{ position: 'fixed', top: y + 50, left: !isMobile ? x - 500 : x }}
       className={styles['setting-container']}
     >
       <div className={styles['body']}>
