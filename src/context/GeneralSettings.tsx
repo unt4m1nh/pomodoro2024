@@ -9,7 +9,7 @@ interface IAppContext {
   currentSetting: TSetting;
   updateSettings: (setting: SettingTypes, newValue: any) => void;
   changeMode: (mode: string) => void;
-  changeBackground: (url: string, index: number) => void;
+  changeBackground: (isMobile: boolean, url: string, index: number) => void;
 }
 
 /**
@@ -71,10 +71,14 @@ export const GeneralSettings = ({
     }
   };
 
-  const changeBackground = (url: string, index: number) => {
-    setCurrentSetting({
+  const changeBackground = (isMobile: boolean, url: string, index: number) => {
+    setCurrentSetting(!isMobile ? {
       ...currentSetting,
       desktop_background: url,
+      theme_index: index,
+    } : {
+      ...currentSetting,
+      mobile_background: url,
       theme_index: index,
     });
   };

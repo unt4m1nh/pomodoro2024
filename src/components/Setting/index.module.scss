@@ -84,6 +84,18 @@ $dawn-blue: #546fff;
   display: flex;
   flex-direction: column;
   
+  .image-container {
+    width: 9.375rem;
+    height: 6.25rem;
+    border-radius: 0.625rem;
+  }
+  
+  img {
+    max-width: 100%;
+    min-width: 4.75rem;
+    height: 6.25rem;
+    border-radius: 0.625rem;
+  }
 }
 
 .setting-options {
@@ -131,17 +143,6 @@ $dawn-blue: #546fff;
   }
 }
 
-.setting-content .image-container {
-  width: 9.375rem;
-  height: 6.25rem;
-  border-radius: 0.625rem;
-}
-
-.setting-content img {
-  max-width: 100%;
-  height: 6.25rem;
-  border-radius: 0.625rem;
-}
 
 .sound-list-selection {
   display: flex;

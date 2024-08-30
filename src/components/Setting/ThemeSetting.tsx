@@ -8,6 +8,8 @@ interface ThemeSettingProps {
     // Define your component props here
 }
 
+const isMobile = window.innerWidth < 640;
+
 const ThemeSetting: React.FC = () => {
     // Implement your component logic here
     const [theme, setTheme] = React.useState(0);
@@ -25,13 +27,13 @@ const ThemeSetting: React.FC = () => {
                     className={styles['image-container']}
                     onClick={() => {
                       setTheme(element.id);
-                      changeBackground(element.link, element.id);
+                      changeBackground(isMobile, !isMobile ? element.desktopUrl : element.mobileUrl, element.id);
                     }}
                   >
                     <img alt='bg-image'  style={{
                       border:
                         currentSetting.theme_index === element.id ? '3px solid var(--green-400)' : 'none',
-                    }} src={element.link}></img>
+                    }} src={!isMobile ? element.desktopUrl : element.mobileUrl  }></img>
                   </div>
                 ))}
               </div>
