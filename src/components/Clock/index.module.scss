@@ -8,10 +8,14 @@
   gap: 2rem;
   z-index: 1;
   margin-top: 6rem;
+
+  @media screen and (min-width: 640px) {
+    margin-top: 3rem;
+  }
 }
 
 .task-title {
-  font-size: 1.5rem;  
+  font-size: 1.5rem;
   display: none;
   @media screen and (min-width: 640px) {
     display: block;
@@ -26,15 +30,21 @@
   font-size: 6.5rem;
 
   @media screen and (min-width: 640px) {
-      font-size: 10rem;
-    }
+    font-size: 10rem;
+  }
 }
 
 .btn-control {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: fit-content;
-    gap: 1rem;
-    margin: 6rem auto;   
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: fit-content;
+  gap: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 6rem;
+
+  @media screen and (min-width: 640px) {
+    margin: 3rem auto;
+  }
 }

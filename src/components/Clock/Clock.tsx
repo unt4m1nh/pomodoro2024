@@ -1,6 +1,6 @@
 import { useTimer } from 'react-timer-hook';
 import ClockController from './ClockController';
-import { useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import AnalogClock from './AnalogClock';
 import Mode from '../Mode/Mode';
 import { TTask } from '../../global/types';
@@ -22,14 +22,16 @@ const Clock = ({ mode, perTimeLeft, currentTask }: IClockProps) => {
   const time = new Date();
   time.setSeconds(time.getSeconds() + currentSetting.timer_length);
   const autoStart = false;
+  const alarmSoundRef = useRef<HTMLAudioElement | null>(null);
   const [didStart, setDidStart] = useState(false);
+  const [expried, setExpired] = useState(false);
   const { seconds, minutes, isRunning, start, pause, resume, restart } =
     useTimer({
       autoStart,
       expiryTimestamp: time,
       onExpire: () => {
-        setDidStart(false);
-        restart;
+        console.log('Expired');
+        setExpired(true);
       },
     });
 
@@ -41,6 +43,12 @@ const Clock = ({ mode, perTimeLeft, currentTask }: IClockProps) => {
     setDidStart(false);
   };
 
+  useEffect(() => {
+    if (alarmSoundRef.current) {
+      alarmSoundRef.current.volume = currentSetting.volume / 100;
+    }
+  }, []);
+
   // Listen to any changes in the timer length and update the timer accordingly
   useEffect(() => {
     const newTime = new Date();
@@ -48,6 +56,18 @@ const Clock = ({ mode, perTimeLeft, currentTask }: IClockProps) => {
     restart(newTime, false);
     setDidStart(false);
   }, [currentSetting.timer_length]);
+
+  // Play alarm sound and restart if timer expried
+  useEffect(() => {
+    if (didStart) {
+      const alarm = new Audio(currentSetting.alarm);
+      alarm.play();
+      const newTime = new Date();
+      newTime.setSeconds(newTime.getSeconds() + currentSetting.timer_length);
+      restart(newTime, false);
+      setDidStart(false);
+    }
+  }, [expried]);
 
   return (
     <>

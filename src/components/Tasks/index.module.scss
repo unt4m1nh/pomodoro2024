@@ -35,9 +35,8 @@ $input-text-color: #333333;
 .task-container {
   position: fixed;
   top: 0;
-  right: -100%;
+  right: -62.5rem;
   height: 100vh;
-  display: none;
   transition: $transition-duration;
   
 }

@@ -8,9 +8,7 @@ function App() {
   return (
     <GeneralSettings>
       <TasksList>
-        <div className='App'>
-          <Home />
-        </div>
+        <Home />
       </TasksList>
     </GeneralSettings>
   );

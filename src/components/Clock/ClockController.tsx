@@ -1,9 +1,11 @@
 import { faRotateRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ButtonMode from '../Button/Mode/ButtonMode';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import React from 'react';
 
+//@ts-ignore
+import mouseClickSound from '../../assets/audio/mouse-click-153941.mp3';
 //@ts-ignore
 import styles from './index.module.scss';
 interface IClockControllerProps {
@@ -25,12 +27,16 @@ const ClockController = ({
 }: IClockControllerProps) => {
   console.log('Is running', isRunning);
   const [rotationDeg, setRotationDeg] = useState(0);
+  const btnPlayAudioRef = useRef<HTMLAudioElement | null>(null);
 
   return (
     <div className={styles['btn-control']}>
       {!didStart ? (
         <ButtonMode
-          onClick={onStart}
+          onClick={() => {
+            btnPlayAudioRef.current?.play();
+            onStart();
+          }}
           color='var(--green-400)'
           textColor='#fff'
           size='large'
@@ -40,7 +46,10 @@ const ClockController = ({
       ) : (
         <>
           <ButtonMode
-            onClick={isRunning ? onPause : onResume}
+            onClick={() => {
+              btnPlayAudioRef.current?.play() 
+              isRunning ? onPause() : onResume()
+            }}
             color='var(--green-400)'
             textColor='#fff'
             size='large'
@@ -55,10 +64,14 @@ const ClockController = ({
               setRotationDeg(rotationDeg + 360);
               setTimeout(onReset, 500);
             }}
-            style={{transitionDuration: '0.4s', transform: `rotate(${rotationDeg}deg)` }}
+            style={{
+              transitionDuration: '0.4s',
+              transform: `rotate(${rotationDeg}deg)`,
+            }}
           />
         </>
       )}
+      <audio ref={btnPlayAudioRef} src={mouseClickSound}></audio>
     </div>
   );
 };
