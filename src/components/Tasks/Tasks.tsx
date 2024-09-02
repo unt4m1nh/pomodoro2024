@@ -176,7 +176,16 @@ const Tasks = ({ isShow, hideTasks }: ITasksProps) => {
                           {...provided.draggableProps}
                           ref={provided.innerRef}
                         >
-                          {!eddtingTask ? (
+                          {eddtingTask && selectedTask === task.id ? (
+                            <div className={styles['task-item']}>
+                              <input
+                                autoFocus
+                                id='input-task-edit'
+                                type='text'
+                                onKeyDown={(e) => handleKeyDown(task.id, e)}
+                              />
+                            </div>
+                          ) : (
                             <div ref={taskRef} className={styles['task-item']}>
                               <p className={styles['task-title']}>
                                 {task.name}
@@ -201,15 +210,6 @@ const Tasks = ({ isShow, hideTasks }: ITasksProps) => {
                                   deleteTask(index);
                                 }}
                                 onEdit={() => setEdditingTask(true)}
-                              />
-                            </div>
-                          ) : (
-                            <div className={styles['task-item']}>
-                              <input
-                                autoFocus
-                                id='input-task-edit'
-                                type='text'
-                                onKeyDown={(e) => handleKeyDown(task.id, e)}
                               />
                             </div>
                           )}
