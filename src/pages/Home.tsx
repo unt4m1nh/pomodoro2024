@@ -23,6 +23,8 @@ const Home: React.FC = () => {
   });
 
   const [isFullScreen, setIsFullScreen] = useState(false);
+  const [viewWidth, setViewWidth] = useState(window.innerWidth);
+  const [viewHeight, setViewHeight] = useState(window.innerHeight);
 
   const isMobile = window.innerWidth < 640;
   const settingBtnRef = useRef<HTMLDivElement | null>(null);
@@ -50,6 +52,21 @@ const Home: React.FC = () => {
     setIsFullScreen(!isFullScreen);
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      setViewWidth(window.innerWidth);
+      setViewHeight(window.innerHeight);
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [viewWidth, viewHeight]);
+
   return (
     <>
       <div
@@ -58,8 +75,8 @@ const Home: React.FC = () => {
           backgroundImage: !isMobile ? `url(${currentSetting. desktop_background})` : `url(${currentSetting.mobile_background})`,
           backgroundSize: '100% 100%',
           backgroundRepeat: 'no-repeat',
-          width: '100%',
-          height: '100%',
+          width: viewWidth,
+          height: viewHeight,
           opacity: 0.8,
         }}
       ></div>
