@@ -21,11 +21,12 @@ const Clock = ({ mode, perTimeLeft, currentTask }: IClockProps) => {
   console.log('Clock re-render', currentSetting.timer_length);
   const time = new Date();
   time.setSeconds(time.getSeconds() + currentSetting.timer_length);
+  console.log(time);
   const autoStart = false;
   const alarmSoundRef = useRef<HTMLAudioElement | null>(null);
   const [didStart, setDidStart] = useState(false);
   const [expried, setExpired] = useState(false);
-  const { seconds, minutes, isRunning, start, pause, resume, restart } =
+  const { hours, seconds, minutes, isRunning, start, pause, resume, restart } =
     useTimer({
       autoStart,
       expiryTimestamp: time,
@@ -78,6 +79,11 @@ const Clock = ({ mode, perTimeLeft, currentTask }: IClockProps) => {
             {currentTask ? currentTask.name : 'You are not on any tasks !'}
           </h1>
           <h1 className={styles['timer']}>
+            {
+              hours > 0 && (
+                hours + ':'
+              )
+            }
             {`${minutes >= 10 ? minutes : '0' + minutes}:${
               seconds >= 10 ? seconds : '0' + seconds
             }`}
