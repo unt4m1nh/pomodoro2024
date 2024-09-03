@@ -41,7 +41,7 @@ const Home: React.FC = () => {
         y: rect.y,
       });
     }
-  }, []);
+  }, [viewWidth , viewHeight]);
 
   const toggleFullScreen = () => {
     if (!isFullScreen) {
