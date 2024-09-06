@@ -45,7 +45,6 @@ export const GeneralSettings = ({
    * @param {any} newValue - The new value for the setting.
    */
   const updateSettings = (setting: SettingTypes, newValue: any) => {
-    console.log(setting, newValue);
     switch (setting) {
       case SettingTypes.THEME:
         setCurrentSetting({ ...currentSetting, desktop_background: newValue });

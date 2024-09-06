@@ -13,8 +13,8 @@ interface SoundSettingProps {
 
 const SoundSetting: React.FC = () => {
   // Add your component logic here
-  const [alarm, setAlarm] = React.useState(0);
   const { currentSetting, updateSettings } = useAppState();
+  const [alarm, setAlarm] = React.useState(currentSetting.alarm);
   const volume = currentSetting.volume;
 
   const alarmSoundRef = useRef(null as HTMLAudioElement | null);
@@ -28,7 +28,6 @@ const SoundSetting: React.FC = () => {
   useEffect(() => {
     if (alarmSoundRef.current !== null) {
       alarmSoundRef.current.volume = volume / 100;
-      console.log(alarm);
       playSelectedAlarm();
     }
   }, [alarm, volume]);
@@ -50,6 +49,7 @@ const SoundSetting: React.FC = () => {
               }
               onClick={() => {
                 setAlarm(element.id);
+                updateSettings(SettingTypes.NOTIFICATION_SOUNDS, element.id);
               }}
             ></div>
             <p>{element.name}</p>

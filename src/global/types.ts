@@ -10,7 +10,7 @@ export type TThemeSetting = {
 };
 
 export type TSoundSetting = {
-  alarm: string;
+  alarm: number;
   volume: number;
 };
 

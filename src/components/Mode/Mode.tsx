@@ -7,13 +7,13 @@ import React from 'react';
 import styles from './index.module.scss';
 
 interface IModeProps {
+  didStart: boolean;
   onChangeMode: (timerLength: number) => void;
 }
 
-const Mode = ({ onChangeMode }: IModeProps) => {
-  const [mode, setMode] = useState(Modes.POMODORO);
+const Mode = ({ didStart, onChangeMode }: IModeProps) => {
   const { currentSetting, changeMode } = useAppState();
-  console.log(currentSetting.timer_length);
+  const [mode, setMode] = useState(currentSetting.mode);
   const handleChangeMode = (targetMode: string) => {
     if (targetMode === Modes.POMODORO) {
       changeMode(Modes.POMODORO)
@@ -36,7 +36,7 @@ const Mode = ({ onChangeMode }: IModeProps) => {
           className={
             mode === Modes.POMODORO
               ? `${styles.mode} ${styles.modeActive}`
-              : styles.mode
+              : didStart ? `${styles['mode']} ${styles['mode-disable']}` : styles.mode
           }
           onClick={() => {
             handleChangeMode(Modes.POMODORO);
@@ -45,10 +45,11 @@ const Mode = ({ onChangeMode }: IModeProps) => {
           Pomodoro
         </div>
         <div
+          
           className={
             mode === Modes.SHORT_BREAK
               ? `${styles.mode} ${styles.modeActive}`
-              : styles.mode
+              : didStart ? `${styles['mode']} ${styles['mode-disable']}` : styles.mode
           }
           onClick={() => {
             handleChangeMode(Modes.SHORT_BREAK);
@@ -60,7 +61,7 @@ const Mode = ({ onChangeMode }: IModeProps) => {
           className={
             mode === Modes.LONG_BREAK
               ? `${styles.mode} ${styles.modeActive}`
-              : styles.mode
+              : didStart ? `${styles['mode']} ${styles['mode-disable']}` : styles.mode
           }
           onClick={() => {
             handleChangeMode(Modes.LONG_BREAK);

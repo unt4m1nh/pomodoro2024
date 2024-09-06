@@ -9,6 +9,7 @@ import React from 'react';
 
 //@ts-ignore
 import styles from './index.module.scss';
+import { getAudio } from '../../utils/getAudio';
 
 interface IClockProps {
   mode: 'Digital' | 'Analog';
@@ -31,13 +32,11 @@ const Clock = ({ mode, perTimeLeft, currentTask }: IClockProps) => {
       autoStart,
       expiryTimestamp: time,
       onExpire: () => {
-        console.log('Expired');
         setExpired(true);
       },
     });
 
   const onChangeMode = (timerLength: number) => {
-    console.log('Change mode', timerLength);
     const newTime = new Date();
     newTime.setSeconds(newTime.getSeconds() + timerLength);
     restart(newTime, false);
@@ -50,6 +49,15 @@ const Clock = ({ mode, perTimeLeft, currentTask }: IClockProps) => {
     }
   }, []);
 
+  // Update page title
+  useEffect(() => {
+    document.title =
+      `${hours > 0 ? hours + ':' : ''}` +
+      `${minutes >= 10 ? minutes : '0' + minutes}:${
+        seconds >= 10 ? seconds : '0' + seconds
+      }`;
+  }, [hours, minutes, seconds]);
+
   // Listen to any changes in the timer length and update the timer accordingly
   useEffect(() => {
     const newTime = new Date();
@@ -61,29 +69,27 @@ const Clock = ({ mode, perTimeLeft, currentTask }: IClockProps) => {
   // Play alarm sound and restart if timer expried
   useEffect(() => {
     if (didStart) {
-      const alarm = new Audio(currentSetting.alarm);
+      const alarm = new Audio(getAudio(currentSetting.alarm));
       alarm.play();
       const newTime = new Date();
       newTime.setSeconds(newTime.getSeconds() + currentSetting.timer_length);
       restart(newTime, false);
+      document.title = 'Pomodoro Clock';
       setDidStart(false);
+      setExpired(false);
     }
   }, [expried]);
 
   return (
     <>
-      <Mode onChangeMode={onChangeMode} />
+      <Mode didStart={didStart} onChangeMode={onChangeMode} />
       {mode === 'Digital' ? (
         <div className={styles['clock-container']}>
           <h1 className={styles['task-title']} style={{ margin: 20 }}>
             {currentTask ? currentTask.name : 'You are not on any tasks !'}
           </h1>
           <h1 className={styles['timer']}>
-            {
-              hours > 0 && (
-                hours + ':'
-              )
-            }
+            {hours > 0 && hours + ':'}
             {`${minutes >= 10 ? minutes : '0' + minutes}:${
               seconds >= 10 ? seconds : '0' + seconds
             }`}
