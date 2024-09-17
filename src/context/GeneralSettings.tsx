@@ -39,9 +39,8 @@ export const GeneralSettings = ({
   children,
 }: IGeneralSettingsProps): JSX.Element => {
   const settingStorage = createLocalStorage('general-setting');
-  console.log(settingStorage.get());
   const [currentSetting, setCurrentSetting] = useState(
-    settingStorage.get() === undefined ? defaultSetting : settingStorage.get()
+    settingStorage.get().desktop_background === undefined ? defaultSetting : settingStorage.get()
   );
 
   useEffect(() => {
