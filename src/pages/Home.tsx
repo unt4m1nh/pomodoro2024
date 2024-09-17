@@ -14,6 +14,7 @@ import { Coordinate } from '../global/types';
 
 const Home: React.FC = () => {
   const { currentSetting } = useAppState();
+  console.log(currentSetting);
   const { currentTasks } = useTasks();
   const [showTask, setShowTask] = useState(false);
   const [showSetting, setShowSetting] = useState(false);
@@ -31,18 +32,6 @@ const Home: React.FC = () => {
   const time = new Date();
   time.setSeconds(time.getSeconds() + 600);
 
-  useEffect(() => {
-    console.log('Mounted');
-
-    if (settingBtnRef.current) {
-      const rect = settingBtnRef.current.getBoundingClientRect();
-      setSettingPos({
-        x: rect.x,
-        y: rect.y,
-      });
-    }
-  }, [viewWidth , viewHeight]);
-
   const toggleFullScreen = () => {
     if (!isFullScreen) {
       document.documentElement.requestFullscreen();
@@ -53,6 +42,15 @@ const Home: React.FC = () => {
   };
 
   useEffect(() => {
+
+    if (settingBtnRef.current) {
+      const rect = settingBtnRef.current.getBoundingClientRect();
+      setSettingPos({
+        x: rect.x,
+        y: rect.y,
+      });
+    }
+
     const handleResize = () => {
       setViewWidth(window.innerWidth);
       setViewHeight(window.innerHeight);
@@ -72,7 +70,7 @@ const Home: React.FC = () => {
       <div
         className='bg-image'
         style={{
-          backgroundImage: !isMobile ? `url(${currentSetting. desktop_background})` : `url(${currentSetting.mobile_background})`,
+          backgroundImage: !isMobile ? `url(${currentSetting.desktop_background})` : `url(${currentSetting.mobile_background})`,
           backgroundSize: '100% 100%',
           backgroundRepeat: 'no-repeat',
           width: viewWidth,

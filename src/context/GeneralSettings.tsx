@@ -1,6 +1,7 @@
-import React, { ReactNode, useContext, useState } from 'react';
+import React, { ReactNode, useContext, useEffect, useState } from 'react';
 import { defaultSetting, Modes, SettingTypes } from '../global/const.ts';
 import { TSetting } from '../global/types.ts';
+import { createLocalStorage } from '../utils/localStorage.ts';
 
 /**
  * Interface for the application context.
@@ -37,7 +38,15 @@ export const useAppState = () => {
 export const GeneralSettings = ({
   children,
 }: IGeneralSettingsProps): JSX.Element => {
-  const [currentSetting, setCurrentSetting] = useState(defaultSetting);
+  const settingStorage = createLocalStorage('general-setting');
+  console.log(settingStorage.get());
+  const [currentSetting, setCurrentSetting] = useState(
+    settingStorage.get() === undefined ? defaultSetting : settingStorage.get()
+  );
+
+  useEffect(() => {
+    settingStorage.set(currentSetting);
+  }, [currentSetting]);
 
   /**
    * Updates the specified setting with the new value.
@@ -71,15 +80,20 @@ export const GeneralSettings = ({
   };
 
   const changeBackground = (isMobile: boolean, url: string, index: number) => {
-    setCurrentSetting(!isMobile ? {
-      ...currentSetting,
-      desktop_background: url,
-      theme_index: index,
-    } : {
-      ...currentSetting,
-      mobile_background: url,
-      theme_index: index,
-    });
+    setCurrentSetting(
+      !isMobile
+        ? {
+            ...currentSetting,
+            desktop_background: url,
+            theme_index: index,
+          }
+        : {
+            ...currentSetting,
+            mobile_background: url,
+            theme_index: index,
+          }
+    );
+    settingStorage.set(currentSetting);
   };
 
   const changeMode = (mode: string) => {
@@ -102,6 +116,7 @@ export const GeneralSettings = ({
         timer_length: currentSetting.long_break_time,
       });
     }
+    settingStorage.set(currentSetting);
   };
 
   return (
