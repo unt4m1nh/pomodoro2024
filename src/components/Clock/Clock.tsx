@@ -10,6 +10,7 @@ import React from 'react';
 //@ts-ignore
 import styles from './index.module.scss';
 import { getAudio } from '../../utils/getAudio';
+import { useTimerClock } from './hook/useTimerClock';
 
 interface IClockProps {
   mode: 'Digital' | 'Analog';
@@ -19,70 +20,28 @@ interface IClockProps {
 
 const Clock = ({ mode, perTimeLeft, currentTask }: IClockProps) => {
   const { currentSetting } = useAppState();
-  console.log('Clock re-render', currentSetting.timer_length);
-  const time = new Date();
-  time.setSeconds(time.getSeconds() + currentSetting.timer_length);
-  console.log(time);
-  const autoStart = false;
-  const alarmSoundRef = useRef<HTMLAudioElement | null>(null);
-  const [didStart, setDidStart] = useState(false);
-  const [expried, setExpired] = useState(false);
-  const { hours, seconds, minutes, isRunning, start, pause, resume, restart } =
-    useTimer({
-      autoStart,
-      expiryTimestamp: time,
-      onExpire: () => {
-        setExpired(true);
-      },
-    });
-
+  const {
+    isRunning,
+    timerClock,
+    hours,
+    seconds,
+    minutes,
+    start,
+    pause,
+    restart,
+    resume,
+    setTimerClock,
+  } = useTimerClock();
   const onChangeMode = (timerLength: number) => {
     const newTime = new Date();
     newTime.setSeconds(newTime.getSeconds() + timerLength);
     restart(newTime, false);
-    setDidStart(false);
+    setTimerClock({ ...timerClock, didStart: false });
   };
-
-  useEffect(() => {
-    if (alarmSoundRef.current) {
-      alarmSoundRef.current.volume = currentSetting.volume / 100;
-    }
-  }, []);
-
-  // Update page title
-  useEffect(() => {
-    document.title =
-      `${hours > 0 ? hours + ':' : ''}` +
-      `${minutes >= 10 ? minutes : '0' + minutes}:${
-        seconds >= 10 ? seconds : '0' + seconds
-      }`;
-  }, [hours, minutes, seconds]);
-
-  // Listen to any changes in the timer length and update the timer accordingly
-  useEffect(() => {
-    const newTime = new Date();
-    newTime.setSeconds(newTime.getSeconds() + currentSetting.timer_length);
-    restart(newTime, false);
-    setDidStart(false);
-  }, [currentSetting.timer_length]);
-
-  // Play alarm sound and restart if timer expried
-  useEffect(() => {
-    if (didStart) {
-      const alarm = new Audio(getAudio(currentSetting.alarm));
-      alarm.play();
-      const newTime = new Date();
-      newTime.setSeconds(newTime.getSeconds() + currentSetting.timer_length);
-      restart(newTime, false);
-      document.title = 'Pomodoro Clock';
-      setDidStart(false);
-      setExpired(false);
-    }
-  }, [expried]);
 
   return (
     <>
-      <Mode didStart={didStart} onChangeMode={onChangeMode} />
+      <Mode didStart={timerClock.didStart} onChangeMode={onChangeMode} />
       {mode === 'Digital' ? (
         <div className={styles['clock-container']}>
           <h1 className={styles['task-title']} style={{ margin: 20 }}>
@@ -103,12 +62,12 @@ const Clock = ({ mode, perTimeLeft, currentTask }: IClockProps) => {
         />
       )}
       <ClockController
-        didStart={didStart}
+        didStart={timerClock.didStart}
         isRunning={isRunning}
         onPause={pause}
         onStart={() => {
           start();
-          setDidStart(true);
+          setTimerClock({ ...timerClock, didStart: true });
         }}
         onReset={() => {
           const newTime = new Date();
@@ -116,7 +75,7 @@ const Clock = ({ mode, perTimeLeft, currentTask }: IClockProps) => {
             newTime.getSeconds() + currentSetting.timer_length
           );
           restart(newTime, false);
-          setDidStart(false);
+          setTimerClock({ ...timerClock, didStart: false });
         }}
         onResume={resume}
       />
