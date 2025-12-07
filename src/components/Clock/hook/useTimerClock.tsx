@@ -32,7 +32,7 @@ export const useTimerClock = () => {
 
   const handleTimerExpired = () => {
     const alarm = new Audio(getAudio(currentSetting.alarm));
-    alarm.play();
+    // alarm.play(); disable alarm sound for now
     const newTime = new Date();
     newTime.setSeconds(newTime.getSeconds() + currentSetting.timer_length);
     restart(newTime, false);

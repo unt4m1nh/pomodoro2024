@@ -1,0 +1,34 @@
+// Colors
+$primary: #13ecc8;
+$background-light: #f6f8f8;
+$background-dark: #10221f;
+
+// Existing colors from index.css
+$green-100: #f1f8e8;
+$green-200: #d8efd3;
+$green-300: #95d2b3;
+$green-400: #4daa9d;
+$stroke-primary: #dbdbde;
+
+// Font Family
+$font-display: "Inter", sans-serif;
+
+// Border Radius
+$border-radius: 0.25rem;
+$border-radius-lg: 0.5rem;
+$border-radius-xl: 0.75rem;
+$border-radius-full: 9999px;
+
+// Dark Mode Mixin
+@mixin dark-mode {
+  :global(.dark) & {
+    @content;
+  }
+}
+
+// Alternative dark mode selector for non-module contexts
+@mixin dark-mode-root {
+  .dark & {
+    @content;
+  }
+}

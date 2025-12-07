@@ -1,18 +1,25 @@
+@import '../../../styles/variables';
+
 .btn {
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   color: #000;
-  border-radius: 0.6525rem;
+  border-radius: $border-radius-lg;
   text-transform: uppercase;
   box-shadow: #fff 4px 4px 0;
   border: none !important;
+  font-family: $font-display;
 
   /** Press button animation **/
   &:active {
-    box-shadow: var(--stroke-primary) 2px 2px 0;
+    box-shadow: $stroke-primary 2px 2px 0;
     transform: translate(4px, 4px);
+  }
+
+  @include dark-mode {
+    background-color: $background-dark;
   }
 }
 
